@@ -252,6 +252,52 @@ public interface ISocket : IDisposable
     public IAsyncResult BeginDisconnect(bool reuseSocket, AsyncCallback? callback, object? state);
 
     /// <summary>
+    /// Begins to asynchronously receive data from a connected <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="offset">The location in buffer to store the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <param name="callback">An <see cref="AsyncCallback"/> delegate that references the method to invoke when the operation is complete.</param>
+    /// <param name="state">A user-defined object that contains information about the receive operation. This object is passed to the <see cref="EndReceive(IAsyncResult)"/> delegate when the operation is complete.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous read.</returns>
+    public IAsyncResult? BeginReceive(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Begins to asynchronously receive data from a connected <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="offset">The location in buffer to store the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="callback">An <see cref="AsyncCallback"/> delegate that references the method to invoke when the operation is complete.</param>
+    /// <param name="state">A user-defined object that contains information about the receive operation. This object is passed to the <see cref="EndReceive(IAsyncResult)"/> delegate when the operation is complete.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous read.</returns>
+    public IAsyncResult BeginReceive(byte[] buffer, int offset, int size, SocketFlags socketFlags, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Begins to asynchronously receive data from a connected <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="buffers">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="callback">An <see cref="AsyncCallback"/> delegate that references the method to invoke when the operation is complete.</param>
+    /// <param name="state">A user-defined object that contains information about the receive operation. This object is passed to the <see cref="EndReceive(IAsyncResult)"/> delegate when the operation is complete.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous read.</returns>
+    public IAsyncResult BeginReceive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Begins to asynchronously receive data from a connected <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="buffers">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <param name="callback">An <see cref="AsyncCallback"/> delegate that references the method to invoke when the operation is complete.</param>
+    /// <param name="state">A user-defined object that contains information about the receive operation. This object is passed to the <see cref="EndReceive(IAsyncResult)"/> delegate when the operation is complete.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous read.</returns>
+    public IAsyncResult? BeginReceive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state);
+
+    /// <summary>
     /// Connects to a remote endpoint.
     /// </summary>
     /// <param name="remoteEndpoint">The remote endpoint to connect to.</param>

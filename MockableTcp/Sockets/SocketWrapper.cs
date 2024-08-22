@@ -215,6 +215,30 @@ public class SocketWrapper : ISocket
     }
 
     /// <inheritdoc/>
+    public IAsyncResult? BeginReceive(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginReceive(byte[] buffer, int offset, int size, SocketFlags socketFlags, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginReceive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult? BeginReceive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
     public void Connect(EndPoint remoteEndpoint)
     {
         _socket.Connect(remoteEndpoint);
