@@ -311,6 +311,99 @@ public interface ISocket : IDisposable
     public IAsyncResult BeginReceiveFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP, AsyncCallback? callback, object? state);
 
     /// <summary>
+    /// Begins to asynchronously receive the specified number of bytes of data into the specified location of the data buffer, using the specified SocketFlags, and stores the endpoint and packet information.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="offset">The location in buffer to store the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on synchronous receive.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous read.</returns>
+    public IAsyncResult BeginReceiveMessageFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Sends data asynchronously to a connected Socket.
+    /// </summary>
+    /// <param name="buffers">An array of type <see cref="byte"/> that contains the data to send</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous send.</returns>
+    public IAsyncResult BeginSend(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Sends data asynchronously to a connected Socket.
+    /// </summary>
+    /// <param name="buffers">An array of type <see cref="byte"/> that contains the data to send</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous send.</returns>
+    public IAsyncResult? BeginSend(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Sends data asynchronously to a connected Socket.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to send</param>
+    /// <param name="offset">The zero-based position in the buffer parameter at which to begin sending data.</param>
+    /// <param name="size">The number of bytes to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous send.</returns>
+    public IAsyncResult BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Sends data asynchronously to a connected Socket.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to send</param>
+    /// <param name="offset">The zero-based position in the buffer parameter at which to begin sending data.</param>
+    /// <param name="size">The number of bytes to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous send.</returns>
+    public IAsyncResult? BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Sends a file asynchronously to a connected <see cref="ISocket"/> object.
+    /// </summary>
+    /// <param name="fileName">A string that contains the path and name of the file to send. This parameter can be null.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous send.</returns>
+    public IAsyncResult BeginSendFile(string? fileName, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Sends a file asynchronously to a connected <see cref="ISocket"/> object.
+    /// </summary>
+    /// <param name="fileName">A string that contains the path and name of the file to send. This parameter can be null.</param>
+    /// <param name="preBuffer">The data to be sent before the file is sent. This parameter can be null.</param>
+    /// <param name="postBuffer">The data to be sent after the file is sent. This parameter can be null.</param>
+    /// <param name="flags">A bitwise combination of the <see cref="TransmitFileOptions"/> enumeration values.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous send.</returns>
+    public IAsyncResult BeginSendFile(string? fileName, byte[]? preBuffer, byte[]? postBuffer, TransmitFileOptions flags, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Sends data asynchronously to a specific remote host.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to send</param>
+    /// <param name="offset">The zero-based position in the buffer parameter at which to begin sending data.</param>
+    /// <param name="size">The number of bytes to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">An <see cref="EndPoint"/> that represents the remote device.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous send.</returns>
+    public IAsyncResult BeginSendTo(byte[] buffer, int offset, int size, SocketFlags socketFlags, EndPoint remoteEP, AsyncCallback? callback, object? state);
+
+    /// <summary>
     /// Connects to a remote endpoint.
     /// </summary>
     /// <param name="remoteEndpoint">The remote endpoint to connect to.</param>

@@ -245,6 +245,54 @@ public class SocketWrapper : ISocket
     }
 
     /// <inheritdoc/>
+    public IAsyncResult BeginReceiveMessageFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginSend(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult? BeginSend(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult? BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginSendFile(string? fileName, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginSendFile(string? fileName, byte[]? preBuffer, byte[]? postBuffer, TransmitFileOptions flags, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginSendTo(byte[] buffer, int offset, int size, SocketFlags socketFlags, EndPoint remoteEP, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
     public void Connect(EndPoint remoteEndpoint)
     {
         _socket.Connect(remoteEndpoint);
