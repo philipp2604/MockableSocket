@@ -53,24 +53,6 @@ public class SocketWrapper : ISocket
     }
 
     /// <inheritdoc/>
-    public IAsyncResult BeginAccept(AsyncCallback? callback, object? state)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/>
-    public IAsyncResult BeginAccept(int receiveSize, AsyncCallback? callback, object? state)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/>
-    public IAsyncResult BeginAccept(ISocket? acceptSocket, int receiveSize, AsyncCallback? callback, object? state)
-    {
-        throw new NotImplementedException();
-    }
-
-    /// <inheritdoc/>
     public AddressFamily AddressFamily { get => _socket.AddressFamily; }
 
     /// <inheritdoc/>
@@ -173,7 +155,7 @@ public class SocketWrapper : ISocket
     }
 
     /// <inheritdoc/>
-    public Task<ISocket> AcceptAsync(CancellationToken cancellationToken = default)
+    public ValueTask<ISocket> AcceptAsync(CancellationToken cancellationToken = default)
     {
         throw new NotImplementedException();
     }
@@ -184,6 +166,23 @@ public class SocketWrapper : ISocket
         throw new NotImplementedException();
     }
 
+    /// <inheritdoc/>
+    public IAsyncResult BeginAccept(AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginAccept(int receiveSize, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginAccept(ISocket? acceptSocket, int receiveSize, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
 
 
     /// <inheritdoc/>
