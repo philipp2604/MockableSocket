@@ -404,6 +404,12 @@ public interface ISocket : IDisposable
     public IAsyncResult BeginSendTo(byte[] buffer, int offset, int size, SocketFlags socketFlags, EndPoint remoteEP, AsyncCallback? callback, object? state);
 
     /// <summary>
+    /// Associates an <see cref="ISocket"/> with a local endpoint.
+    /// </summary>
+    /// <param name="localEP">The local <see cref="EndPoint"/> to associate with the <see cref="ISocket"/>.</param>
+    public void Bind(EndPoint localEP);
+
+    /// <summary>
     /// Connects to a remote endpoint.
     /// </summary>
     /// <param name="remoteEndpoint">The remote endpoint to connect to.</param>

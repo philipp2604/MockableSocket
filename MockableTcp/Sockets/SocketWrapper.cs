@@ -293,6 +293,12 @@ public class SocketWrapper : ISocket
     }
 
     /// <inheritdoc/>
+    public void Bind(EndPoint localEP)
+    {
+        _socket.Bind(localEP);
+    }
+
+    /// <inheritdoc/>
     public void Connect(EndPoint remoteEndpoint)
     {
         _socket.Connect(remoteEndpoint);
