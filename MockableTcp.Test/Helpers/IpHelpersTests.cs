@@ -133,4 +133,64 @@ public class IpHelpersTests
         //Act & Assert
         Assert.Throws<ArgumentException>(() => IpHelpers.CreateIPEndPoint(address, port));
     }
+
+    [Fact]
+    public async Task CreateIPEndPointAsync_ValidArguments_ReturnsEndpoint()
+    {
+        //Arrange
+        var address = "127.0.0.1";
+        var port = 123;
+
+        //Act
+        var endpoint = await IpHelpers.CreateIPEndPointAsync(address, port);
+
+        //Assert
+        Assert.NotNull(endpoint);
+        Assert.Equal(endpoint.Port, port);
+        Assert.Equal(endpoint.Address.ToString(), address);
+    }
+
+    [Fact]
+    public async Task CreateIPEndPointAsync_HostIsNull_Throws()
+    {
+        //Arrange
+        string? address = null;
+        var port = 123;
+
+        //Act & Assert
+        await Assert.ThrowsAsync<ArgumentNullException>(() => IpHelpers.CreateIPEndPointAsync(address!, port));
+    }
+
+    [Fact]
+    public async Task CreateIPEndPointAsync_HostIsEmpty_Throws()
+    {
+        //Arrange
+        var address = "";
+        var port = 123;
+
+        //Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => IpHelpers.CreateIPEndPointAsync(address, port));
+    }
+
+    [Fact]
+    public async Task CreateIPEndPointAsync_PortIsInvalid_Throws()
+    {
+        //Arrange
+        var address = "127.0.0.1";
+        var port = -1;
+
+        //Act & Assert
+        await Assert.ThrowsAsync<ArgumentOutOfRangeException>(() => IpHelpers.CreateIPEndPointAsync(address, port));
+    }
+
+    [Fact]
+    public async Task CreateIPEndPointAsync_HostIsInvalid_Throws()
+    {
+        //Arrange
+        var address = "hello";
+        var port = 123;
+
+        //Act & Assert
+        await Assert.ThrowsAsync<ArgumentException>(() => IpHelpers.CreateIPEndPointAsync(address, port));
+    }
 }
