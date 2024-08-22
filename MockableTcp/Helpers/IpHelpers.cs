@@ -19,6 +19,7 @@ public static partial class IpHelpers
     /// </summary>
     /// <param name="ip">The string to check for containing a valid ip address.</param>
     /// <returns>A bool, true if the string is a valid ip address, otherwise false.</returns>
+    /// <exception cref="ArgumentNullException"></exception>
     public static bool IsIpAddress(string ip)
     {
         ArgumentNullException.ThrowIfNull(ip, nameof(ip));
@@ -36,6 +37,8 @@ public static partial class IpHelpers
     /// <param name="port">Port number.</param>
     /// <returns>A task that represents the asynchronous operation.<br/>The task's result contains the created <see cref="IPEndPoint"/>.</returns>
     /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static async Task<IPEndPoint> CreateIPEndPointAsync(string host, int port)
     {
         ArgumentException.ThrowIfNullOrEmpty(host, nameof(host));
@@ -67,6 +70,8 @@ public static partial class IpHelpers
     /// <param name="port">Port number.</param>
     /// <returns>The created <see cref="IPEndPoint"/></returns>
     /// <exception cref="ArgumentException"></exception>
+    /// <exception cref="ArgumentNullException"></exception>
+    /// <exception cref="ArgumentOutOfRangeException"></exception>
     public static IPEndPoint CreateIPEndPoint(string host, int port)
     {
         ArgumentException.ThrowIfNullOrEmpty(host, nameof(host));
