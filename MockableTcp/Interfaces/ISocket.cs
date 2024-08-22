@@ -166,17 +166,42 @@ public interface ISocket : IDisposable
     /// </summary>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
     /// <returns>An asynchronous task that completes with the accepted <see cref="ISocket"/>.</returns>
-    public Task<ISocket> AcceptAsync(CancellationToken cancellationToken = default);
+    public ValueTask<ISocket> AcceptAsync(CancellationToken cancellationToken = default);
 
     /// <summary>
     /// Accepts an incoming connection.
     /// </summary>
     /// <param name="acceptSocket">The <see cref="ISocket"></see> to use for accepting the connection.</param>
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
-    /// <returns></returns>
+    /// <returns>An asynchronous task that completes with the accepted <see cref="ISocket"/>.</returns>
     public ValueTask<ISocket> AcceptAsync(ISocket? acceptSocket, CancellationToken cancellationToken = default);
 
+    /// <summary>
+    /// Begins an asynchronous operation to accept an incoming connection attempt.
+    /// </summary>
+    /// <param name="callback">The <see cref="AsyncCallback"></see> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous <see cref="ISocket"/> creation.</returns>
+    public IAsyncResult BeginAccept(AsyncCallback? callback, object? state);
 
+    /// <summary>
+    /// Begins an asynchronous operation to accept an incoming connection attempt and receives the first block of data sent by the client application.
+    /// </summary>
+    /// <param name="receiveSize">The number of bytes to accept from the sender.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"></see> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous <see cref="ISocket"/> creation.</returns>
+    public IAsyncResult BeginAccept(int receiveSize, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Begins an asynchronous operation to accept an incoming connection attempt from a specified socket and receives the first block of data sent by the client application.
+    /// </summary>
+    /// <param name="acceptSocket">The accepted <see cref="ISocket"/> object. This value may be null.</param>
+    /// <param name="receiveSize">The maximum number of bytes to receive.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"></see> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous <see cref="ISocket"/> creation.</returns>
+    public IAsyncResult BeginAccept(ISocket? acceptSocket, int receiveSize, AsyncCallback? callback, object? state);
 
     /// <summary>
     /// Connects to a remote endpoint.
