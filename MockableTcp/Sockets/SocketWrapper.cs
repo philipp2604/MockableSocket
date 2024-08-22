@@ -37,7 +37,52 @@ public class SocketWrapper : ISocket
     public AddressFamily AddressFamily { get => _socket.AddressFamily; }
 
     /// <inheritdoc/>
-    public SocketType SocketType { get => _socket.SocketType; }
+    public int Available { get => _socket.Available; }
+
+    /// <inheritdoc/>
+    public bool Blocking { get => _socket.Blocking; set => _socket.Blocking = value; }
+
+    /// <inheritdoc/>
+    public bool Connected { get => _socket.Connected; }
+
+    /// <inheritdoc/>
+    public bool DontFragment { get => _socket.DontFragment; set => _socket.DontFragment = value; }
+
+    /// <inheritdoc/>
+    public bool DualMode { get => _socket.DualMode; set => _socket.DualMode = value; }
+
+    /// <inheritdoc/>
+    public bool EnableBroadcast { get => _socket.EnableBroadcast; set => _socket.EnableBroadcast = value; }
+
+    /// <inheritdoc/>
+    public bool ExclusiveAddressUse { get => _socket.ExclusiveAddressUse; set => _socket.ExclusiveAddressUse = value; }
+
+    /// <inheritdoc/>
+    public IntPtr Handle { get => _socket.Handle; }
+
+    /// <inheritdoc/>
+    public bool IsBound { get => _socket.IsBound; }
+
+    /// <inheritdoc/>
+    public LingerOption? LingerState { get => _socket.LingerState; set => _socket.LingerState = value!; }
+
+    /// <inheritdoc/>
+    public EndPoint? LocalEndPoint { get => _socket.LocalEndPoint; }
+
+    /// <inheritdoc/>
+    public bool MulticastLoopback { get => _socket.MulticastLoopback; set => _socket.MulticastLoopback = value; }
+
+    /// <inheritdoc/>
+    public bool NoDelay { get => _socket.NoDelay; set => _socket.NoDelay = value; }
+
+    /// <inheritdoc/>
+    public static bool OSSupportsIPv4 { get => Socket.OSSupportsIPv4; }
+
+    /// <inheritdoc/>
+    public static bool OSSupportsIPv6 { get => Socket.OSSupportsIPv6; }
+
+    /// <inheritdoc/>
+    public static bool OSSupportsUnixDomainSockets { get => Socket.OSSupportsUnixDomainSockets; }
 
     /// <inheritdoc/>
     public ProtocolType ProtocolType { get => _socket.ProtocolType; }
@@ -46,13 +91,25 @@ public class SocketWrapper : ISocket
     public int ReceiveBufferSize { get => _socket.ReceiveBufferSize; set => _socket.ReceiveBufferSize = value; }
 
     /// <inheritdoc/>
-    public int SendBufferSize { get => _socket.SendBufferSize; set => _socket.SendBufferSize = value; }
-
-    /// <inheritdoc/>
     public int ReceiveTimeout { get => _socket.ReceiveTimeout; set => _socket.ReceiveTimeout = value; }
 
     /// <inheritdoc/>
+    public EndPoint? RemoteEndPoint { get => _socket.RemoteEndPoint; }
+
+    /// <inheritdoc/>
+    public SafeSocketHandle SafeHandle { get => _socket.SafeHandle; }
+
+    /// <inheritdoc/>
+    public int SendBufferSize { get => _socket.SendBufferSize; set => _socket.SendBufferSize = value; }
+
+    /// <inheritdoc/>
     public int SendTimeout { get => _socket.SendTimeout; set => _socket.SendTimeout = value; }
+
+    /// <inheritdoc/>
+    public SocketType SocketType { get => _socket.SocketType; }
+
+    /// <inheritdoc/>
+    public short Ttl { get => _socket.Ttl; set => _socket.Ttl = value; }
 
     /// <inheritdoc/>
     public void Connect(EndPoint remoteEndpoint)
