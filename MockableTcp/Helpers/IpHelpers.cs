@@ -52,7 +52,16 @@ public static partial class IpHelpers
         }
         else
         {
-            var addresses = await Dns.GetHostAddressesAsync(host);
+            IPAddress[] addresses;
+            try
+            {
+                addresses = await Dns.GetHostAddressesAsync(host);
+            }
+            catch
+            {
+                throw new ArgumentException("Could not resolve host.", nameof(host));
+            }
+
             ipAddress = addresses == null || addresses.Length == 0
                 ? throw new ArgumentException("Could not resolve host.", nameof(host))
                 : addresses[0];
@@ -85,7 +94,16 @@ public static partial class IpHelpers
         }
         else
         {
-            var addresses = Dns.GetHostAddresses(host);
+            IPAddress[] addresses;
+            try
+            {
+                addresses = Dns.GetHostAddresses(host);
+            }
+            catch
+            {
+                throw new ArgumentException("Could not resolve host.", nameof(host));
+            }
+
             ipAddress = addresses == null || addresses.Length == 0
                 ? throw new ArgumentException("Could not resolve host.", nameof(host))
                 : addresses[0];

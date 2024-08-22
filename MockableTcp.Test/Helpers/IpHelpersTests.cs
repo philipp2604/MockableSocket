@@ -1,3 +1,5 @@
+using System.Net;
+
 namespace MockableTcp.Test.Helpers;
 
 public class IpHelpersTests
@@ -43,6 +45,16 @@ public class IpHelpersTests
     }
 
     [Fact]
+    public void IsIpAddress_ArgumentIsNull_Throws()
+    {
+        //Arrange
+        string? address = null;
+
+        //Act & Assert
+        Assert.Throws<ArgumentNullException>(() => { IpHelpers.IsIpAddress(address!); });
+    }
+
+    [Fact]
     public void IsIpAddress_InValidAddress_ReturnsFalse()
     {
         //Arrange
@@ -60,5 +72,65 @@ public class IpHelpersTests
             //Assert
             Assert.False(isValid);
         }
+    }
+
+    [Fact]
+    public void CreateIPEndPoint_ValidArguments_ReturnsEndpoint()
+    {
+        //Arrange
+        var address = "127.0.0.1";
+        var port = 123;
+
+        //Act
+        var endpoint = IpHelpers.CreateIPEndPoint(address, port);
+
+        //Assert
+        Assert.NotNull(endpoint);
+        Assert.Equal(endpoint.Port, port);
+        Assert.Equal(endpoint.Address.ToString(), address);
+    }
+
+    [Fact]
+    public void CreateIPEndPoint_HostIsNull_Throws()
+    {
+        //Arrange
+        string? address = null;
+        var port = 123;
+
+        //Act & Assert
+        Assert.Throws<ArgumentNullException>(() =>  IpHelpers.CreateIPEndPoint(address!, port));
+    }
+
+    [Fact]
+    public void CreateIPEndPoint_HostIsEmpty_Throws()
+    {
+        //Arrange
+        var address = "";
+        var port = 123;
+
+        //Act & Assert
+        Assert.Throws<ArgumentException>(() => IpHelpers.CreateIPEndPoint(address!, port));
+    }
+
+    [Fact]
+    public void CreateIPEndPoint_PortIsInvalid_Throws()
+    {
+        //Arrange
+        var address = "127.0.0.1";
+        var port = -1;
+
+        //Act & Assert
+        Assert.Throws<ArgumentOutOfRangeException>(() => IpHelpers.CreateIPEndPoint(address, port));
+    }
+
+    [Fact]
+    public void CreateIPEndPoint_HostIsInvalid_Throws()
+    {
+        //Arrange
+        var address = "hello";
+        var port = 123;
+
+        //Act & Assert
+        Assert.Throws<ArgumentException>(() => IpHelpers.CreateIPEndPoint(address, port));
     }
 }
