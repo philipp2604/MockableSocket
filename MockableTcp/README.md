@@ -12,7 +12,7 @@ This library aims to provide mockable classes for tcp communication in .Net Core
 **Right now, only a part of the Socket class as well as a TcpClient is implemented.**
 
 ## Download
-You can acquire this library either directly via the NuGet package manager or by downloading it from the [NuGet Gallery](https://www.nuget.org/packages/philipp2604.WpfNavigation/).
+You can acquire this library either directly via the NuGet package manager or by downloading it from the [NuGet Gallery](https://www.nuget.org/packages/philipp2604.MockableTcp/).
 
 ## Questions? Problems?
 **Feel free to reach out!**
@@ -26,4 +26,4 @@ You can acquire this library either directly via the NuGet package manager or by
 * Improve exception handling.
 
 ## License
-This library is [MIT licensed](./LICENSE.txt).
+This library is [MIT licensed](https://github.com/philipp2604/MockableTcp/blob/master/LICENSE.txt).
