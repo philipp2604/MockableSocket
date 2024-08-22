@@ -186,6 +186,30 @@ public class SocketWrapper : ISocket
 
 
     /// <inheritdoc/>
+    public IAsyncResult BeginConnect(EndPoint remoteEP, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginConnect(IPAddress address, int port, AsyncCallback? requestCallback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginConnect(IPAddress[] addresses, int port, AsyncCallback? requestCallback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginConnect(string host, int port, AsyncCallback? requestCallback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
     public void Connect(EndPoint remoteEndpoint)
     {
         _socket.Connect(remoteEndpoint);

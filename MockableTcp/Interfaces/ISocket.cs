@@ -204,6 +204,46 @@ public interface ISocket : IDisposable
     public IAsyncResult BeginAccept(ISocket? acceptSocket, int receiveSize, AsyncCallback? callback, object? state);
 
     /// <summary>
+    /// Begins an asynchronous request for a remote host connection.
+    /// </summary>
+    /// <param name="remoteEP">An <see cref="EndPoint"/> that represents the remote host.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous connection.</returns>
+    public IAsyncResult BeginConnect(EndPoint remoteEP, AsyncCallback? callback, object? state);
+
+    /// <summary>
+    /// Begins an asynchronous request for a remote host connection. The host is specified by an <see cref="IPAddress"/> and a port number.
+    /// </summary>
+    /// <param name="address">The <see cref="IPAddress"/> of the remote host.</param>
+    /// <param name="port">The port number of the remote host.</param>
+    /// <param name="requestCallback">An <see cref="AsyncCallback"/> delegate that references the method to invoke when the connect operation is complete.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous connection.</returns>
+    public IAsyncResult BeginConnect(IPAddress address, int port, AsyncCallback? requestCallback, object? state);
+
+    /// <summary>
+    /// Begins an asynchronous request for a remote host connection. The host is specified by an <see cref="IPAddress"/> array and a port number.
+    /// </summary>
+    /// <param name="addresses">At least one <see cref="IPAddress"/>, designating the remote host.</param>
+    /// <param name="port">The port number of the remote host.</param>
+    /// <param name="requestCallback">An <see cref="AsyncCallback"/> delegate that references the method to invoke when the connect operation is complete.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous connection.</returns>
+    public IAsyncResult BeginConnect(IPAddress[] addresses, int port, AsyncCallback? requestCallback, object? state);
+
+    /// <summary>
+    /// Begins an asynchronous request for a remote host connection. The host is specified by a host name and a port number.
+    /// </summary>
+    /// <param name="host">The name of the remote host.</param>
+    /// <param name="port">The port number of the remote host.</param>
+    /// <param name="requestCallback"></param>
+    /// <param name="requestCallback">An <see cref="AsyncCallback"/> delegate that references the method to invoke when the connect operation is complete.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous connection.</returns>
+    public IAsyncResult BeginConnect(string host, int port, AsyncCallback? requestCallback, object? state);
+
+    /// <summary>
     /// Connects to a remote endpoint.
     /// </summary>
     /// <param name="remoteEndpoint">The remote endpoint to connect to.</param>
