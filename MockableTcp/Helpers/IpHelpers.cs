@@ -21,6 +21,8 @@ public static partial class IpHelpers
     /// <returns>A bool, true if the string is a valid ip address, otherwise false.</returns>
     public static bool IsIpAddress(string ip)
     {
+        ArgumentNullException.ThrowIfNull(ip, nameof(ip));
+
         var isIpv4 = Ipv4Regex().IsMatch(ip);
         var isIpv6 = Ipv6Regex().IsMatch(ip);
 
