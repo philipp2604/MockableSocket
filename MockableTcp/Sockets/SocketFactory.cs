@@ -9,14 +9,8 @@ namespace MockableTcp.Sockets;
 public class SocketFactory : ISocketFactory
 {
     /// <inheritdoc/>
-    public ISocket CreateSocket(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    public ISocket CreateSocket(AddressFamily? addressFamily, SocketType socketType, ProtocolType protocolType)
     {
-        return new SocketWrapper(addressFamily, socketType, protocolType);
-    }
-
-    /// <inheritdoc/>
-    public ISocket CreateSocket(SocketType socketType, ProtocolType protocolType)
-    {
-        return new SocketWrapper(socketType, protocolType);
+        return addressFamily != null ? new SocketWrapper((AddressFamily)addressFamily, socketType, protocolType) : new SocketWrapper(socketType, protocolType);
     }
 }

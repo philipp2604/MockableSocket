@@ -53,7 +53,7 @@ public class TcpClient(ISocketFactory socketFactory) : ITcpClient
 
         Disconnect();
 
-        Socket = IPEndPoint != null ? _socketFactory.CreateSocket(IPEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp) : _socketFactory.CreateSocket(SocketType.Stream, ProtocolType.Tcp);
+        Socket = IPEndPoint != null ? _socketFactory.CreateSocket(IPEndPoint.AddressFamily, SocketType.Stream, ProtocolType.Tcp) : _socketFactory.CreateSocket(null, SocketType.Stream, ProtocolType.Tcp);
         Socket.ReceiveBufferSize = ReceiveBufferSize;
         Socket.SendBufferSize = SendBufferSize;
         Socket.ReceiveTimeout = ReceiveTimeout.Milliseconds;
