@@ -298,10 +298,49 @@ public class SocketWrapper : ISocket
         _socket.Bind(localEP);
     }
 
-    /// <inheritdoc/>
-    public void Connect(EndPoint remoteEndpoint)
+    /// <summary>
+    /// Cancels an asynchronous request for a remote host connection.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object used to request the connection to the remote host by calling one of the <see cref="ConnectAsync(SocketType, ProtocolType, SocketAsyncEventArgs)"/> methods.</param>
+    public static void CancelConnectAsync(SocketAsyncEventArgs e)
     {
-        _socket.Connect(remoteEndpoint);
+        Socket.CancelConnectAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public void Close()
+    {
+        _socket.Close();
+    }
+
+    /// <inheritdoc/>
+    public void Close(int timeout)
+    {
+        _socket.Close(timeout);
+    }
+
+    /// <inheritdoc/>
+    public void Connect(EndPoint remoteEP)
+    {
+        _socket.Connect(remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public void Connect(IPAddress address, int port)
+    {
+        _socket.Connect(address, port);
+    }
+
+    /// <inheritdoc/>
+    public void Connect(IPAddress[] addresses, int port)
+    {
+        _socket.Connect(addresses, port);
+    }
+
+    /// <inheritdoc/>
+    public void Connect(string host, int port)
+    {
+        _socket.Connect(host, port);
     }
 
     /// <inheritdoc/>
@@ -334,11 +373,6 @@ public class SocketWrapper : ISocket
         return await _socket.ReceiveAsync(buffer, SocketFlags.None, cancellationToken);
     }
 
-    /// <inheritdoc/>
-    public void Close()
-    {
-        _socket.Close();
-    }
 
     /// <inheritdoc/>
     public void Dispose()

@@ -410,10 +410,42 @@ public interface ISocket : IDisposable
     public void Bind(EndPoint localEP);
 
     /// <summary>
-    /// Connects to a remote endpoint.
+    /// Closes the <see cref="ISocket"/> connection and releases all associated resources.
     /// </summary>
-    /// <param name="remoteEndpoint">The remote endpoint to connect to.</param>
-    public void Connect(EndPoint remoteEndpoint);
+    public void Close();
+
+    /// <summary>
+    /// Closes the <see cref="ISocket"/> connection and releases all associated resources with a specified timeout to allow queued data to be sent.
+    /// </summary>
+    /// <param name="timeout">Wait up to timeout milliseconds to send any remaining data, then close the socket.</param>
+    public void Close(int timeout);
+
+    /// <summary>
+    /// Establishes a connection to a remote host.
+    /// </summary>
+    /// <param name="remoteEP">An <see cref="EndPoint"/> that represents the remote device.</param>
+    public void Connect(EndPoint remoteEP);
+
+    /// <summary>
+    /// Establishes a connection to a remote host. The host is specified by an IP address and a port number.
+    /// </summary>
+    /// <param name="address">The IP address of the remote host.</param>
+    /// <param name="port">The port number of the remote host.</param>
+    public void Connect(IPAddress address, int port);
+
+    /// <summary>
+    /// Establishes a connection to a remote host. The host is specified by an array of IP addresses and a port number.
+    /// </summary>
+    /// <param name="addresses">The IP addresses of the remote host.</param>
+    /// <param name="port">The port number of the remote host.</param>
+    public void Connect(IPAddress[] addresses, int port);
+
+    /// <summary>
+    /// Establishes a connection to a remote host. The host is specified by a host name and a port number.
+    /// </summary>
+    /// <param name="host">The name of the remote host.</param>
+    /// <param name="port">The port number of the remote host.</param>
+    public void Connect(string host, int port);
 
     /// <summary>
     /// Connects asynchronously to the remote <see cref="IPEndPoint"></see>.
@@ -459,8 +491,4 @@ public interface ISocket : IDisposable
     /// <returns>A task that represents the asynchronous operation.<br/>The task's result contains the number of successfully received bytes.</returns>
     public Task<int> ReceiveAsync(byte[] buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default);
 
-    /// <summary>
-    /// Closes the socket.
-    /// </summary>
-    public void Close();
 }
