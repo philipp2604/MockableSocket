@@ -136,6 +136,49 @@ public interface ISocket : IDisposable
     public short Ttl { get; set; }
 
     /// <summary>
+    /// Creates a new Socket for a newly created connection.
+    /// </summary>
+    /// <returns>A <see cref="ISocket"></see> for a newly created connection.</returns>
+    public ISocket Accept();
+
+    /// <summary>
+    /// Accepts an incoming connection.
+    /// </summary>
+    /// <returns>An asynchronous task that completes with the accepted Socket.</returns>
+    public Task<ISocket> AcceptAsync();
+
+    /// <summary>
+    /// Accepts an incoming connection.
+    /// </summary>
+    /// <param name="acceptSocket">The <see cref="ISocket"></see> to use for accepting the connection.</param>
+    /// <returns>An asynchronous task that completes with the accepted <see cref="ISocket"/>.</returns>
+    public Task<ISocket> AcceptAsync(ISocket? acceptSocket);
+
+    /// <summary>
+    /// Begins an asynchronous operation to accept an incoming connection attempt.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>True if the I/O operation is pending, false if the I/O operation completed synchronously.</returns>
+    public bool AcceptAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Accepts an incoming connection.
+    /// </summary>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with the accepted <see cref="ISocket"/>.</returns>
+    public Task<ISocket> AcceptAsync(CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Accepts an incoming connection.
+    /// </summary>
+    /// <param name="acceptSocket">The <see cref="ISocket"></see> to use for accepting the connection.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns></returns>
+    public ValueTask<ISocket> AcceptAsync(ISocket? acceptSocket, CancellationToken cancellationToken = default);
+
+
+
+    /// <summary>
     /// Connects to a remote endpoint.
     /// </summary>
     /// <param name="remoteEndpoint">The remote endpoint to connect to.</param>

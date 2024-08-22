@@ -13,24 +13,43 @@ public class SocketWrapper : ISocket
     private bool _disposed;
 
     /// <summary>
-    /// Creates a new instance of <see cref="SocketWrapper"/>.
+    /// Creates a new instance of <see cref="SocketWrapper"/> for the specific socket handle.
     /// </summary>
-    /// <param name="addressFamily">The address family.</param>
-    /// <param name="socketType">The socket type.</param>
-    /// <param name="protocolType">The protocol type.</param>
-    public SocketWrapper(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    /// <param name="handle">The socket handle for the <see cref="SocketWrapper"/> that the Socket object will encapsulate.</param>
+    public SocketWrapper(SafeSocketHandle handle)
     {
-        _socket = new Socket(addressFamily, socketType, protocolType);
+        _socket = new Socket(handle);
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="SocketWrapper"/>.
+    /// Creates a new instance of <see cref="SocketWrapper"/> using the specified value returned from <see cref="DuplicateAndClose"/>
     /// </summary>
-    /// <param name="socketType">The socket type.</param>
-    /// <param name="protocolType">The protocol type.</param>
+    /// <param name="socketInformation">The socket information returned by <see cref="DuplicateAndClose"/></param>
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+    public SocketWrapper(SocketInformation socketInformation)
+    {
+        _socket = new Socket(socketInformation);
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="SocketWrapper"/> using the specified socket type and protocol.<br/>If the operating system supports IPv6, this constructor creates a dual-mode socket; otherwise, it creates an IPv4 socket.
+    /// </summary>
+    /// <param name="socketType">One of the <see cref="SocketType"/> values.</param>
+    /// <param name="protocolType">One of the <see cref="ProtocolType"/> values.</param>
     public SocketWrapper(SocketType socketType, ProtocolType protocolType)
     {
         _socket = new Socket(socketType, protocolType);
+    }
+
+    /// <summary>
+    /// Creates a new instance of <see cref="SocketWrapper" /> using the specified address family, socket type and protocol.
+    /// </summary>
+    /// <param name="addressFamily">One of the <see cref="AddressFamily"/> values.</param>
+    /// <param name="socketType">One of the <see cref="SocketType"/> values.</param>
+    /// <param name="protocolType">One of the <see cref="ProtocolType"/> values.</param>
+    public SocketWrapper(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    {
+        _socket = new Socket(addressFamily, socketType, protocolType);
     }
 
     /// <inheritdoc/>
@@ -110,6 +129,44 @@ public class SocketWrapper : ISocket
 
     /// <inheritdoc/>
     public short Ttl { get => _socket.Ttl; set => _socket.Ttl = value; }
+
+    /// <inheritdoc/>
+    public ISocket Accept()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public Task<ISocket> AcceptAsync()
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public Task<ISocket> AcceptAsync(ISocket? acceptSocket)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public bool AcceptAsync(SocketAsyncEventArgs e)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public Task<ISocket> AcceptAsync(CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<ISocket> AcceptAsync(ISocket? acceptSocket, CancellationToken cancellationToken = default)
+    {
+        throw new NotImplementedException();
+    }
+
+
 
     /// <inheritdoc/>
     public void Connect(EndPoint remoteEndpoint)
