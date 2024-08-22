@@ -1,5 +1,5 @@
 # MockableTcp
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![build and test](https://github.com/philipp2604/WpfNavigation/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/philipp2604/WpfNavigation/actions/workflows/build-and-test.yml) ![GitHub Release](https://img.shields.io/github/v/release/philipp2604/WpfNavigation) [![NuGet Version](https://img.shields.io/nuget/v/philipp2604.WpfNavigation)](https://www.nuget.org/packages/philipp2604.WpfNavigation/)
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT) [![build and test](https://github.com/philipp2604/MockableTcp/actions/workflows/build-and-test.yml/badge.svg)](https://github.com/philipp2604/MockableTcp/actions/workflows/build-and-test.yml) ![GitHub Release](https://img.shields.io/github/v/release/philipp2604/MockableTcp) [![NuGet Version](https://img.shields.io/nuget/v/philipp2604.MockableTcp)](https://www.nuget.org/packages/philipp2604.MockableTcp/)
 
 
 
