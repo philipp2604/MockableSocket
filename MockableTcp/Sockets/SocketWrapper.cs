@@ -239,6 +239,12 @@ public class SocketWrapper : ISocket
     }
 
     /// <inheritdoc/>
+    public IAsyncResult BeginReceiveFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP, AsyncCallback? callback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
     public void Connect(EndPoint remoteEndpoint)
     {
         _socket.Connect(remoteEndpoint);

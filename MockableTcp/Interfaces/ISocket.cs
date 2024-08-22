@@ -298,6 +298,19 @@ public interface ISocket : IDisposable
     public IAsyncResult? BeginReceive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state);
 
     /// <summary>
+    /// Begins to asynchronously receive data from a specified network device.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="offset">The location in buffer to store the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on synchronous receive.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous read.</returns>
+    public IAsyncResult BeginReceiveFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP, AsyncCallback? callback, object? state);
+
+    /// <summary>
     /// Connects to a remote endpoint.
     /// </summary>
     /// <param name="remoteEndpoint">The remote endpoint to connect to.</param>
