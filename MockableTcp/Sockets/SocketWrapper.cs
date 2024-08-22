@@ -184,7 +184,6 @@ public class SocketWrapper : ISocket
         throw new NotImplementedException();
     }
 
-
     /// <inheritdoc/>
     public IAsyncResult BeginConnect(EndPoint remoteEP, AsyncCallback? callback, object? state)
     {
@@ -205,6 +204,12 @@ public class SocketWrapper : ISocket
 
     /// <inheritdoc/>
     public IAsyncResult BeginConnect(string host, int port, AsyncCallback? requestCallback, object? state)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public IAsyncResult BeginDisconnect(bool reuseSocket, AsyncCallback? callback, object? state)
     {
         throw new NotImplementedException();
     }

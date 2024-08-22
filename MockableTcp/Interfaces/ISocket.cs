@@ -237,11 +237,19 @@ public interface ISocket : IDisposable
     /// </summary>
     /// <param name="host">The name of the remote host.</param>
     /// <param name="port">The port number of the remote host.</param>
-    /// <param name="requestCallback"></param>
     /// <param name="requestCallback">An <see cref="AsyncCallback"/> delegate that references the method to invoke when the connect operation is complete.</param>
     /// <param name="state">An object that contains state information for this request.</param>
     /// <returns>An <see cref="IAsyncResult"/> that references the asynchronous connection.</returns>
     public IAsyncResult BeginConnect(string host, int port, AsyncCallback? requestCallback, object? state);
+
+    /// <summary>
+    /// Begins an asynchronous request to disconnect from a remote endpoint.
+    /// </summary>
+    /// <param name="reuseSocket">True if this socket can be reused after the connection is closed; otherwise, false.</param>
+    /// <param name="callback">The <see cref="AsyncCallback"/> delegate.</param>
+    /// <param name="state">An object that contains state information for this request.</param>
+    /// <returns>An <see cref="IAsyncResult"/> object that references the asynchronous operation.</returns>
+    public IAsyncResult BeginDisconnect(bool reuseSocket, AsyncCallback? callback, object? state);
 
     /// <summary>
     /// Connects to a remote endpoint.
