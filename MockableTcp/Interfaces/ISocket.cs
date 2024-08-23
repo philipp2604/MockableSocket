@@ -522,6 +522,60 @@ public interface ISocket : IDisposable
     public Task ConnectAsync(EndPoint remoteEP);
 
     /// <summary>
+    /// Closes the socket connection and allows reuse of the socket.
+    /// </summary>
+    /// <param name="reuseSocket">true if this socket can be reused after the current connection is closed; otherwise, false.</param>
+    public void Disconnect(bool reuseSocket);
+
+    /// <summary>
+    /// Begins an asynchronous request to disconnect from a remote endpoint.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>True if the I/O operation is pending, false if it completed successfully.</returns>
+    public bool DisconnectAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Disconnects a connected socket from the remote host.
+    /// </summary>
+    /// <param name="reuseSocket">Indicates whether the socket should be available for reuse after disconnect.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public ValueTask DisconnectAsync(bool reuseSocket, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Duplicates the socket reference for the target process, and closes the socket for this process.
+    /// </summary>
+    /// <param name="targetProcessId">The ID of the target process where a duplicate of the socket reference is created.</param>
+    /// <returns>The socket reference to be passed to the target process.</returns>
+
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+    public SocketInformation DuplicateAndClose(int targetProcessId);
+
+    /// <summary>
+    /// Asynchronously accepts an incoming connection attempt and creates a new <see cref="ISocket"/> to handle remote host communication.
+    /// </summary>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information for this asynchronous operation as well as any user defined data.</param>
+    /// <returns>An <see cref="ISocket"/> to handle communication with the remote host.</returns>
+    public ISocket EndAccept(IAsyncResult asyncResult);
+
+    /// <summary>
+    /// Asynchronously accepts an incoming connection attempt and creates a new <see cref="ISocket"/> to handle remote host communication.<br/>This method returns a buffer that contains the initial data transferred.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the bytes transferred.</param>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information for this asynchronous operation as well as any user defined data.</param>
+    /// <returns>An <see cref="ISocket"/> to handle communication with the remote host.</returns>
+    public ISocket EndAccept(out byte[] buffer, IAsyncResult asyncResult);
+
+    /// <summary>
+    /// Asynchronously accepts an incoming connection attempt and creates a new <see cref="ISocket"/> to handle remote host communication.<br/>This method returns a buffer that contains the initial data and the number of bytes transferre
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the bytes transferred.</param>
+    /// <param name="bytesTransferred">The number of bytes transferred.</param>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information for this asynchronous operation as well as any user defined data.</param>
+    /// <returns>An <see cref="ISocket"/> to handle communication with the remote host.</returns>
+    public ISocket EndAccept(out byte[] buffer, out int bytesTransferred, IAsyncResult asyncResult);
+
+    /// <summary>
     /// Send data to the remote endpoint.
     /// </summary>
     /// <param name="buffer">Buffer containing the data to be sent.</param>

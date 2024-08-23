@@ -397,7 +397,65 @@ public class SocketW : ISocket
         return _socket.ConnectAsync(remoteEP);
     }
 
+    /// <inheritdoc/>
+    public void Disconnect(bool reuseSocket)
+    {
+        _socket.Disconnect(reuseSocket);
+    }
 
+    /// <inheritdoc/>
+    public bool DisconnectAsync(SocketAsyncEventArgs e)
+    {
+        return _socket.DisconnectAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask DisconnectAsync(bool reuseSocket, CancellationToken cancellationToken = default)
+    {
+        return _socket.DisconnectAsync(reuseSocket, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public void Dispose()
+    {
+        Dispose(true);
+        GC.SuppressFinalize(this);
+    }
+
+    /// <inheritdoc/>
+    public void Dispose(bool disposing)
+    {
+        if (!_disposed && disposing)
+        {
+            _socket.Close();
+            _disposed = true;
+        }
+    }
+
+    /// <inheritdoc/>
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+    public SocketInformation DuplicateAndClose(int targetProcessId)
+    {
+        return _socket.DuplicateAndClose(targetProcessId);
+    }
+
+    /// <inheritdoc/>
+    public ISocket EndAccept(IAsyncResult asyncResult)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public ISocket EndAccept(out byte[] buffer, IAsyncResult asyncResult)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public ISocket EndAccept(out byte[] buffer, out int bytesTransferred, IAsyncResult asyncResult)
+    {
+        throw new NotImplementedException();
+    }
 
 
     /// <inheritdoc/>
@@ -425,25 +483,10 @@ public class SocketW : ISocket
     }
 
 
-    /// <inheritdoc/>
-    public void Dispose()
-    {
-        Dispose(true);
-        GC.SuppressFinalize(this);
-    }
 
     ~SocketW()
     {
         Dispose(false);
     }
 
-    /// <inheritdoc/>
-    public void Dispose(bool disposing)
-    {
-        if (!_disposed && disposing)
-        {
-            _socket.Close();
-            _disposed = true;
-        }
-    }
 }
