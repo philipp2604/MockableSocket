@@ -7,47 +7,47 @@ namespace MockableTcp.Sockets;
 /// <summary>
 /// Wraps <see cref="Socket"/> to implement ISocket
 /// </summary>
-public class SocketWrapper : ISocket
+public class SocketW : ISocket
 {
     private readonly Socket _socket;
     private bool _disposed;
 
     /// <summary>
-    /// Creates a new instance of <see cref="SocketWrapper"/> for the specific socket handle.
+    /// Creates a new instance of <see cref="SocketW"/> for the specific socket handle.
     /// </summary>
-    /// <param name="handle">The socket handle for the <see cref="SocketWrapper"/> that the Socket object will encapsulate.</param>
-    public SocketWrapper(SafeSocketHandle handle)
+    /// <param name="handle">The socket handle for the <see cref="SocketW"/> that the Socket object will encapsulate.</param>
+    public SocketW(SafeSocketHandle handle)
     {
         _socket = new Socket(handle);
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="SocketWrapper"/> using the specified value returned from <see cref="DuplicateAndClose"/>
+    /// Creates a new instance of <see cref="SocketW"/> using the specified value returned from <see cref="DuplicateAndClose"/>
     /// </summary>
     /// <param name="socketInformation">The socket information returned by <see cref="DuplicateAndClose"/></param>
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
-    public SocketWrapper(SocketInformation socketInformation)
+    public SocketW(SocketInformation socketInformation)
     {
         _socket = new Socket(socketInformation);
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="SocketWrapper"/> using the specified socket type and protocol.<br/>If the operating system supports IPv6, this constructor creates a dual-mode socket; otherwise, it creates an IPv4 socket.
+    /// Creates a new instance of <see cref="SocketW"/> using the specified socket type and protocol.<br/>If the operating system supports IPv6, this constructor creates a dual-mode socket; otherwise, it creates an IPv4 socket.
     /// </summary>
     /// <param name="socketType">One of the <see cref="SocketType"/> values.</param>
     /// <param name="protocolType">One of the <see cref="ProtocolType"/> values.</param>
-    public SocketWrapper(SocketType socketType, ProtocolType protocolType)
+    public SocketW(SocketType socketType, ProtocolType protocolType)
     {
         _socket = new Socket(socketType, protocolType);
     }
 
     /// <summary>
-    /// Creates a new instance of <see cref="SocketWrapper" /> using the specified address family, socket type and protocol.
+    /// Creates a new instance of <see cref="SocketW" /> using the specified address family, socket type and protocol.
     /// </summary>
     /// <param name="addressFamily">One of the <see cref="AddressFamily"/> values.</param>
     /// <param name="socketType">One of the <see cref="SocketType"/> values.</param>
     /// <param name="protocolType">One of the <see cref="ProtocolType"/> values.</param>
-    public SocketWrapper(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
+    public SocketW(AddressFamily addressFamily, SocketType socketType, ProtocolType protocolType)
     {
         _socket = new Socket(addressFamily, socketType, protocolType);
     }
@@ -381,7 +381,7 @@ public class SocketWrapper : ISocket
         GC.SuppressFinalize(this);
     }
 
-    ~SocketWrapper()
+    ~SocketW()
     {
         Dispose(false);
     }

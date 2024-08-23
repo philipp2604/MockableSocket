@@ -5,6 +5,6 @@ using System.Text;
 using System.Threading.Tasks;
 
 namespace MockableTcp.Test.Sockets;
-public class SocketWrapperTests
+public class SocketWTests
 {
 }

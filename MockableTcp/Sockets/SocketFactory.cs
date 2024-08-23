@@ -14,6 +14,6 @@ public class SocketFactory : ISocketFactory
         ArgumentNullException.ThrowIfNull(socketType, nameof(socketType));
         ArgumentNullException.ThrowIfNull(protocolType, nameof(protocolType));
 
-        return addressFamily != null ? new SocketWrapper((AddressFamily)addressFamily, socketType, protocolType) : new SocketWrapper(socketType, protocolType);
+        return addressFamily != null ? new SocketW((AddressFamily)addressFamily, socketType, protocolType) : new SocketW(socketType, protocolType);
     }
 }

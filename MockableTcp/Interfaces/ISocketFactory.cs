@@ -10,7 +10,7 @@ public interface ISocketFactory
     /// <param name="addressFamily">Optionally: the address family.</param>
     /// <param name="socketType">The socket type.</param>
     /// <param name="protocolType">The protocol type.</param>
-    /// <returns>A new instance of SocketWrapper, implementing ISocket</returns>
+    /// <returns>A new instance of SocketW, implementing ISocket</returns>
     /// <exception cref="ArgumentNullException"></exception>
     public ISocket CreateSocket(AddressFamily? addressFamily, SocketType socketType, ProtocolType protocolType);
 }
