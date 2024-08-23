@@ -13,9 +13,18 @@ public class SocketW : ISocket
     private bool _disposed;
 
     /// <summary>
+    /// Creates a new instance of <see cref="SocketW"/> for the specific <see cref="Socket"/>
+    /// </summary>
+    /// <param name="socket">The <see cref="Socket"/> for the <see cref="SocketW"/> to encapsulate.</param>
+    public SocketW(Socket socket)
+    {
+        _socket = socket;
+    }
+
+    /// <summary>
     /// Creates a new instance of <see cref="SocketW"/> for the specific socket handle.
     /// </summary>
-    /// <param name="handle">The socket handle for the <see cref="SocketW"/> that the Socket object will encapsulate.</param>
+    /// <param name="handle">The socket handle for the <see cref="SocketW"/> to encapsulate.</param>
     public SocketW(SafeSocketHandle handle)
     {
         _socket = new Socket(handle);
