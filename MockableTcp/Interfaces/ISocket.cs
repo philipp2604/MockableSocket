@@ -1,5 +1,6 @@
 ﻿using System.Net;
 using System.Net.Sockets;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MockableTcp.Interfaces;
 
@@ -448,12 +449,77 @@ public interface ISocket : IDisposable
     public void Connect(string host, int port);
 
     /// <summary>
-    /// Connects asynchronously to the remote <see cref="IPEndPoint"></see>.
+    /// Establishes a connection to a remote host.
     /// </summary>
-    /// <param name="remoteEndpoint">The remote <see cref="IPEndPoint"></see> to connect to.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns>A <see cref="Task"> that represents the asynchronous operation.</returns>
-    public Task ConnectAsync(IPEndPoint remoteEndpoint, CancellationToken cancellationToken = default);
+    /// <param name="addresses">A list of <see cref="IPAddress"/> for the remote host that will be used to attempt to connect to the remote host.</param>
+    /// <param name="port">The port on the remote host to connect to.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public ValueTask ConnectAsync(IPAddress[] addresses, int port, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Establishes a connection to a remote host.
+    /// </summary>
+    /// <param name="host">The hostname of the remote host to connect to.</param>
+    /// <param name="port">The port on the remote host to connect to.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public ValueTask ConnectAsync(string host, int port, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Establishes a connection to a remote host.
+    /// </summary>
+    /// <param name="address">The <see cref="IPAddress"/> of the remote host to connect to.</param>
+    /// <param name="port">The port on the remote host to connect to.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public ValueTask ConnectAsync(IPAddress address, int port, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Establishes a connection to a remote host.
+    /// </summary>
+    /// <param name="host">The hostname of the remote host to connect to.</param>
+    /// <param name="port">The port on the remote host to connect to.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public Task ConnectAsync(string host, int port);
+
+    /// <summary>
+    /// Establishes a connection to a remote host.
+    /// </summary>
+    /// <param name="addresses">A list of <see cref="IPAddress"/> for the remote host that will be used to attempt to connect to the remote host.</param>
+    /// <param name="port">The port on the remote host to connect to.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public Task ConnectAsync(IPAddress[] addresses, int port);
+
+    /// <summary>
+    /// Establishes a connection to a remote host.
+    /// </summary>
+    /// <param name="address">The <see cref="IPAddress"/> of the remote host to connect to.</param>
+    /// <param name="port">The port on the remote host to connect to.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public Task ConnectAsync(IPAddress address, int port);
+
+    /// <summary>
+    /// Establishes a connection to a remote host.
+    /// </summary>
+    /// <param name="remoteEP">The <see cref="EndPoint"/> to connect to.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public ValueTask ConnectAsync(EndPoint remoteEP, CancellationToken cancellationToken);
+
+    /// <summary>
+    /// Begins an asynchronous request for a connection to a remote host.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>True if the I/O operation is pending, false if it completed successfully.</returns>
+    public bool ConnectAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Establishes a connection to a remote host.
+    /// </summary>
+    /// <param name="remoteEP">The <see cref="EndPoint"/> to connect to.</param>
+    /// <returns>An asynchronous task that completes when the connection is established.</returns>
+    public Task ConnectAsync(EndPoint remoteEP);
 
     /// <summary>
     /// Send data to the remote endpoint.

@@ -344,10 +344,61 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public async Task ConnectAsync(IPEndPoint remoteEndpoint, CancellationToken cancellationToken = default)
+    public ValueTask ConnectAsync(IPAddress[] addresses, int port, CancellationToken cancellationToken)
     {
-        await _socket.ConnectAsync(remoteEndpoint, cancellationToken);
+        return _socket.ConnectAsync(addresses, port, cancellationToken);
     }
+
+    /// <inheritdoc/>
+    public ValueTask ConnectAsync(string host, int port, CancellationToken cancellationToken)
+    {
+        return _socket.ConnectAsync(host, port, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask ConnectAsync(IPAddress address, int port, CancellationToken cancellationToken)
+    {
+        return _socket.ConnectAsync(address, port, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task ConnectAsync(string host, int port)
+    {
+        return _socket.ConnectAsync(host, port);
+    }
+
+    /// <inheritdoc/>
+    public Task ConnectAsync(IPAddress[] addresses, int port)
+    {
+        return _socket.ConnectAsync(addresses, port);
+    }
+
+    /// <inheritdoc/>
+    public Task ConnectAsync(IPAddress address, int port)
+    {
+        return _socket.ConnectAsync(address, port);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask ConnectAsync(EndPoint remoteEP, CancellationToken cancellationToken)
+    {
+        return _socket.ConnectAsync(remoteEP, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public bool ConnectAsync(SocketAsyncEventArgs e)
+    {
+        return _socket.ConnectAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public Task ConnectAsync(EndPoint remoteEP)
+    {
+        return _socket.ConnectAsync(remoteEP);
+    }
+
+
+
 
     /// <inheritdoc/>
     public int Send(byte[] buffer, SocketFlags socketFlags, out SocketError errorCode)
