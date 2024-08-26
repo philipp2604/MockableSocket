@@ -5,6 +5,8 @@ using System.Net.Sockets;
 
 namespace MockableTcp.Sockets;
 
+#pragma warning disable RCS1047 // Non-asynchronous method name should not end with 'Async'
+
 /// <summary>
 /// Wraps <see cref="Socket"/> to implement ISocket
 /// </summary>
@@ -1102,5 +1104,6 @@ public class SocketW : ISocket
     {
         Dispose(false);
     }
-
 }
+
+#pragma warning restore RCS1047 // Non-asynchronous method name should not end with 'Async'

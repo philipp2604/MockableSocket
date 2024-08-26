@@ -5,6 +5,7 @@ using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace MockableTcp.Interfaces;
 
+#pragma warning disable RCS1047 // Non-asynchronous method name should not end with 'Async'
 public interface ISocket : IDisposable
 {
     /// <summary>
@@ -548,7 +549,6 @@ public interface ISocket : IDisposable
     /// </summary>
     /// <param name="targetProcessId">The ID of the target process where a duplicate of the socket reference is created.</param>
     /// <returns>The socket reference to be passed to the target process.</returns>
-
     [System.Runtime.Versioning.SupportedOSPlatform("windows")]
     public SocketInformation DuplicateAndClose(int targetProcessId);
 
@@ -749,7 +749,7 @@ public interface ISocket : IDisposable
     public int Receive(Span<byte> buffer, SocketFlags socketFlags, out SocketError errorCode);
 
     /// <summary>
-    /// Receives data from a bound <see cref="ISocket"/> into into the list of receive buffers, using the specified <see cref="SocketFlags"/>.
+    /// Receives data from a bound <see cref="ISocket"/> into the list of receive buffers, using the specified <see cref="SocketFlags"/>.
     /// </summary>
     /// <param name="buffers">A list of <see cref="ArraySegment{T}"/>s of type <see cref="byte"/> that contains the received data.</param>
     /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
@@ -991,7 +991,6 @@ public interface ISocket : IDisposable
     /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
     /// <returns></returns>
     public ValueTask<int> ReceiveFromAsync(Memory<byte> buffer, SocketFlags socketFlags, SocketAddress receivedAddress, CancellationToken cancellationToken = default);
-
 
     /// <summary>
     /// Receives the specified number of bytes of data into the specified location of the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/> and <see cref="IPPacketInformation"/>.
@@ -1416,3 +1415,5 @@ public interface ISocket : IDisposable
     /// <param name="how">One of the <see cref="SocketShutdown"/> values that specifies the operation that will no longer be allowed.</param>
     public void Shutdown(SocketShutdown how);
 }
+
+#pragma warning restore RCS1047 // Non-asynchronous method name should not end with 'Async'
