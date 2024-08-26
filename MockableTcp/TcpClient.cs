@@ -184,7 +184,7 @@ public class TcpClient(ISocketFactory socketFactory) : ITcpClient
 
         try
         {
-            return await Socket.SendAsync([.. buffer], SocketFlags.None, cancellationToken);
+            return await Socket.SendAsync(buffer.ToArray(), SocketFlags.None, cancellationToken);
         }
         catch (Exception)
         {

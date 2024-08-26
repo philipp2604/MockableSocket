@@ -1,4 +1,5 @@
-﻿using System.Net;
+﻿using System.Diagnostics.Metrics;
+using System.Net;
 using System.Net.Sockets;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
@@ -576,39 +577,842 @@ public interface ISocket : IDisposable
     public ISocket EndAccept(out byte[] buffer, out int bytesTransferred, IAsyncResult asyncResult);
 
     /// <summary>
-    /// Send data to the remote endpoint.
+    /// Ends a pending asynchronous connection request.
     /// </summary>
-    /// <param name="buffer">Buffer containing the data to be sent.</param>
-    /// <param name="socketFlags">Socket flags.</param>
-    /// <param name="errorCode">Error code.</param>
-    /// <returns>An <see cref="int"/> representing the number of sent bytes.</returns>
-    public int Send(byte[] buffer, SocketFlags socketFlags, out SocketError errorCode);
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    public void EndConnect(IAsyncResult asyncResult);
 
     /// <summary>
-    /// Asynchronously sends data to the remote endpoint.
+    /// Ends a pending asynchronous disconnect request.
     /// </summary>
-    /// <param name="buffer">Buffer containing the data to be sent.</param>
-    /// <param name="socketFlags">Socket flags.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns>A task that represents the asynchronous operation.<br/>The task's result contains the number of successfully sent bytes.</returns>
-    public Task<int> SendAsync(byte[] buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default);
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    public void EndDisconnect(IAsyncResult asyncResult);
 
     /// <summary>
-    /// Receives data from the remote endpoint.
+    /// Ends a pending asynchronous read.
     /// </summary>
-    /// <param name="buffer">Buffer to store the received data.</param>
-    /// <param name="socketFlags">Socket flags.</param>
-    /// <param name="errorCode">Error code.</param>
-    /// <returns>An <see cref="int"/> representing the number of received bytes.</returns>
-    public int Receive(byte[] buffer, SocketFlags socketFlags, out SocketError errorCode);
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int EndReceive(IAsyncResult asyncResult);
 
     /// <summary>
-    /// Asynchronously receives data from the remote endpoint.
+    /// Ends a pending asynchronous read.
     /// </summary>
-    /// <param name="buffer">Buffer to store the received data.</param>
-    /// <param name="socketFlags">Socket flags.</param>
-    /// <param name="cancellationToken">A <see cref="CancellationToken" /> to observe while waiting for the task to complete.</param>
-    /// <returns>A task that represents the asynchronous operation.<br/>The task's result contains the number of successfully received bytes.</returns>
-    public Task<int> ReceiveAsync(byte[] buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default);
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int EndReceive(IAsyncResult asyncResult, out SocketError errorCode);
 
+    /// <summary>
+    /// Ends a pending asynchronous read from a specific endpoint.
+    /// </summary>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    /// <param name="endPoint">The source <see cref="EndPoint"/>.</param>
+    /// <returns>If successful, the number of bytes received. If unsuccessful, returns 0.</returns>
+    public int EndReceiveFrom(IAsyncResult asyncResult, ref EndPoint endPoint);
+
+    /// <summary>
+    /// Ends a pending asynchronous read from a specific endpoint.
+    /// </summary>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values for the received packet.</param>
+    /// <param name="endPoint">The source <see cref="EndPoint"/>.</param>
+    /// <param name="ipPacketInformation">The <see cref="IPAddress"/> and interface of the received packet.</param>
+    /// <returns>If successful, the number of bytes received. If unsuccessful, returns 0.</returns>
+    public int EndReceiveMessageFrom(IAsyncResult asyncResult, ref SocketFlags socketFlags, ref EndPoint endPoint, out IPPacketInformation ipPacketInformation);
+
+    /// <summary>
+    /// Ends a pending asynchronous send.
+    /// </summary>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    /// <returns>If successful, the number of bytes sent to the Socket; otherwise, an invalid Socket error.</returns>
+    public int EndSend(IAsyncResult asyncResult);
+
+    /// <summary>
+    /// Ends a pending asynchronous send.
+    /// </summary>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <returns>If successful, the number of bytes sent to the Socket; otherwise, an invalid Socket error.</returns>
+    public int EndSend(IAsyncResult asyncResult, out SocketError errorCode);
+
+    /// <summary>
+    /// Ends a pending asynchronous send of a file.
+    /// </summary>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    public void EndSendFile(IAsyncResult asyncResult);
+
+    /// <summary>
+    /// Ends a pending asynchronous send to a specific location.
+    /// </summary>
+    /// <param name="asyncResult">An <see cref="IAsyncResult"/> that stores state information and any user defined data for this asynchronous operation.</param>
+    /// <returns>If successful, the number of bytes sent; otherwise, an invalid Socket error.</returns>
+    public int EndSendTo(IAsyncResult asyncResult);
+
+    /// <summary>
+    /// Gets a socket option value using platform-specific level and name identifiers.
+    /// </summary>
+    /// <param name="optionLevel">The platform-defined option level.</param>
+    /// <param name="optionName">The platform-defined option name.</param>
+    /// <param name="optionValue">The span into which the retrieved option value should be stored.</param>
+    /// <returns>The number of bytes written into optionValue for a successfully retrieved value.</returns>
+    public int GetRawSocketOption(int optionLevel, int optionName, Span<byte> optionValue);
+
+    /// <summary>
+    /// Returns the value of a Socket option.
+    /// </summary>
+    /// <param name="optionLevel">One of the <see cref="SocketOptionLevel"/> values.</param>
+    /// <param name="optionName">One of the <see cref="SocketOptionName"/> values.</param>
+    /// <param name="optionValue">An array of type <see cref="byte"/> that is to receive the option setting.</param>
+    public void GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, byte[] optionValue);
+
+    /// <summary>
+    /// Returns the value of the specified Socket option in an array.
+    /// </summary>
+    /// <param name="optionLevel">One of the <see cref="SocketOptionLevel"/> values.</param>
+    /// <param name="optionName">One of the <see cref="SocketOptionName"/> values.</param>
+    /// <param name="optionLength">The length, in bytes, of the expected return value.</param>
+    /// <returns>An array of type <see cref="byte"/> that contains the value of the socket option.</returns>
+    public byte[] GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optionLength);
+
+    /// <summary>
+    /// Returns the value of a specified Socket option, represented as an object.
+    /// </summary>
+    /// <param name="optionLevel">One of the <see cref="SocketOptionLevel"/> values.</param>
+    /// <param name="optionName">One of the <see cref="SocketOptionName"/> values.</param>
+    /// <returns>An object that represents the value of the option.</returns>
+    public object? GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName);
+
+    /// <summary>
+    /// Sets low-level operating modes for the Socket using numerical control codes.
+    /// </summary>
+    /// <param name="ioControlCode">An <see cref="Int32"/> value that specifies the control code of the operation to perform.</param>
+    /// <param name="optionInValue">A <see cref="byte"/> array that contains the input data required by the operation.</param>
+    /// <param name="optionOutValue">A <see cref="byte"/> array that contains the output data returned by the operation.</param>
+    /// <returns>The number of bytes in the optionOutValue parameter.</returns>
+    public int IOControl(int ioControlCode, byte[]? optionInValue, byte[]? optionOutValue);
+
+    /// <summary>
+    /// Sets low-level operating modes for the Socket using the IOControlCode enumeration to specify control codes.
+    /// </summary>
+    /// <param name="ioControlCode">A <see cref="IOControlCode"/> value that specifies the control code of the operation to perform.</param>
+    /// <param name="optionInValue">A <see cref="byte"/> array that contains the input data required by the operation.</param>
+    /// <param name="optionOutValue">A <see cref="byte"/> array that contains the output data returned by the operation.</param>
+    /// <returns>The number of bytes in the optionOutValue parameter.</returns>
+    public int IOControl(IOControlCode ioControlCode, byte[]? optionInValue, byte[]? optionOutValue);
+
+    /// <summary>
+    /// Places an <see cref="ISocket"/> in a listening state.
+    /// </summary>
+    public void Listen();
+
+    /// <summary>
+    /// Places an <see cref="ISocket"/> in a listening state.
+    /// </summary>
+    /// <param name="backlog">The maximum length of the pending connections queue.</param>
+    public void Listen(int backlog);
+
+    /// <summary>
+    /// Determines the status of the <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="timeout">The time to wait for a response.</param>
+    /// <param name="mode">One of the <see cref="SelectMode"/> values.</param>
+    /// <returns>The status of the Socket based on the polling mode value passed in the mode parameter. Returns true if any of the following conditions occur before the timeout expires, otherwise, false.</returns>
+    public bool Poll(TimeSpan timeout, SelectMode mode);
+
+    /// <summary>
+    /// Determines the status of the <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="microSeconds">The time to wait for a response, in microseconds.</param>
+    /// <param name="mode">One of the <see cref="SelectMode"/> values.</param>
+    /// <returns>The status of the Socket based on the polling mode value passed in the mode parameter. Returns true if any of the following conditions occur before the timeout expires, otherwise, false.</returns>
+    public bool Poll(int microSeconds, SelectMode mode);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into a receive buffer, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="offset">The position in the buffer parameter to store the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into a receive buffer, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(Span<byte> buffer, SocketFlags socketFlags, out SocketError errorCode);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into into the list of receive buffers, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffers">A list of <see cref="ArraySegment{T}"/>s of type <see cref="byte"/> that contains the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into a receive buffer, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(byte[] buffer, int size, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into a receive buffer, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">A <see cref="Span{T}"/> of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(Span<byte> buffer, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Receives the specified number of bytes from a bound <see cref="ISocket"/> into the specified offset position of the receive buffer, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="offset">The location in buffer to store the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(byte[] buffer, int offset, int size, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into a receive buffer, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(byte[] buffer, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into a receive buffer.
+    /// </summary>
+    /// <param name="buffer">A <see cref="Span{T}"/> of <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(Span<byte> buffer);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into the list of receive buffers.
+    /// </summary>
+    /// <param name="buffers">A list of <see cref="ArraySegment{T}"/>s of type <see cref="byte"/> that contains the received data.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(IList<ArraySegment<byte>> buffers);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into a receive buffer.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for the received data.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(byte[] buffer);
+
+    /// <summary>
+    /// Receives data from a bound <see cref="ISocket"/> into the list of receive buffers.
+    /// </summary>
+    /// <param name="buffers">A list of <see cref="ArraySegment{T}"/>s of type <see cref="byte"/> that contains the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int Receive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Receives data from a connected socket.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes received.</returns>
+    public Task<int> ReceiveAsync(ArraySegment<byte> buffer);
+
+    /// <summary>
+    /// Receives data from a connected socket.
+    /// </summary>
+    /// <param name="buffers">A list of buffers for the received data.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes received.</returns>
+    public Task<int> ReceiveAsync(IList<ArraySegment<byte>> buffers);
+
+    /// <summary>
+    /// Begins an asynchronous request to receive data from a connected Socket object.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>true if the I/O operation is pending, false if it completed synchronously.</returns>
+    public bool ReceiveAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Receives data from a connected socket.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when receiving the data.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes received.</returns>
+    public Task<int> ReceiveAsync(ArraySegment<byte> buffer, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Receives data from a connected socket.
+    /// </summary>
+    /// <param name="buffers">A list of buffers for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when receiving the data.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes received.</returns>
+    public Task<int> ReceiveAsync(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Receives data from a connected socket.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes received.</returns>
+    public ValueTask<int> ReceiveAsync(Memory<byte> buffer, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Receives data from a connected socket.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when receiving the data.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes received.</returns>
+    public ValueTask<int> ReceiveAsync(Memory<byte> buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Receives the specified number of bytes into the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveFrom(byte[] buffer, int size, SocketFlags socketFlags, ref EndPoint remoteEP);
+
+    /// <summary>
+    /// Receives the specified number of bytes of data into the specified location of the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="offset">The position in the buffer parameter to store the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP);
+
+    /// <summary>
+    /// Receives a datagram into the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">A <see cref="Span{T}"/> of <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveFrom(Span<byte> buffer, SocketFlags socketFlags, ref EndPoint remoteEP);
+
+    /// <summary>
+    /// Receives a datagram into the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveFrom(byte[] buffer, SocketFlags socketFlags, ref EndPoint remoteEP);
+
+    /// <summary>
+    /// Receives a datagram into the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">A <see cref="Span{T}"/> of <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="receivedAddress">A <see cref="SocketAddress"/> instance that gets updated with the value of the remote peer when this method returns.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveFrom(Span<byte> buffer, SocketFlags socketFlags, SocketAddress receivedAddress);
+
+    /// <summary>
+    /// Receives a datagram into the data buffer and stores the <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">A <see cref="Span{T}"/> of <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveFrom(Span<byte> buffer, ref EndPoint remoteEP);
+
+    /// <summary>
+    /// Receives a datagram into the data buffer and stores the <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveFrom(byte[] buffer, ref EndPoint remoteEP);
+
+    /// <summary>
+    /// Begins to asynchronously receive data from a specified network device.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>true if the I/O operation is pending, false if it completed synchronously.</returns>
+    public bool ReceiveFromAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Receives data and returns the <see cref="EndPoint"/> of the sending host.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="remoteEndPoint">An <see cref="EndPoint"/> of the same type as the endpoint of the remote host.</param>
+    /// <returns>An asynchronous task that completes with a <see cref="SocketReceiveFromResult"/> containing the number of bytes received and the endpoint of the sending host.</returns>
+    public Task<SocketReceiveFromResult> ReceiveFromAsync(ArraySegment<byte> buffer, EndPoint remoteEndPoint);
+
+    /// <summary>
+    /// Receives data and returns the <see cref="EndPoint"/> of the sending host.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when receiving the data.</param>
+    /// <param name="remoteEndPoint">An <see cref="EndPoint"/> of the same type as the endpoint of the remote host.</param>
+    /// <returns>An asynchronous task that completes with a <see cref="SocketReceiveFromResult"/> containing the number of bytes received and the endpoint of the sending host.</returns>
+    public Task<SocketReceiveFromResult> ReceiveFromAsync(ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint);
+
+    /// <summary>
+    /// Receives data and returns the <see cref="EndPoint"/> of the sending host.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="remoteEndPoint">An <see cref="EndPoint"/> of the same type as the endpoint of the remote host.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with a <see cref="SocketReceiveFromResult"/> containing the number of bytes received and the endpoint of the sending host.</returns>
+    public ValueTask<SocketReceiveFromResult> ReceiveFromAsync(Memory<byte> buffer, EndPoint remoteEndPoint, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Receives data and returns the <see cref="EndPoint"/> of the sending host.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when receiving the data.</param>
+    /// <param name="remoteEndPoint">An <see cref="EndPoint"/> of the same type as the endpoint of the remote host.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with a <see cref="SocketReceiveFromResult"/> containing the number of bytes received and the endpoint of the sending host.</returns>
+    public ValueTask<SocketReceiveFromResult> ReceiveFromAsync(Memory<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Receives a datagram into the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when receiving the data.</param>
+    /// <param name="receivedAddress">A <see cref="SocketAddress"/> instance that gets updated with the value of the remote peer when this method returns.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns></returns>
+    public ValueTask<int> ReceiveFromAsync(Memory<byte> buffer, SocketFlags socketFlags, SocketAddress receivedAddress, CancellationToken cancellationToken = default);
+
+
+    /// <summary>
+    /// Receives the specified number of bytes of data into the specified location of the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/> and <see cref="IPPacketInformation"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="offset">The position in the buffer parameter to store the received data.</param>
+    /// <param name="size">The number of bytes to receive.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
+    /// <param name="ipPacketInformation">An <see cref="IPPacketInformation"/> holding address and interface information.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveMessageFrom(byte[] buffer, int offset, int size, ref SocketFlags socketFlags, ref EndPoint remoteEP, out IPPacketInformation ipPacketInformation);
+
+    /// <summary>
+    /// Receives the specified number of bytes of data into the specified location of the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/> and <see cref="IPPacketInformation"/>.
+    /// </summary>
+    /// <param name="buffer">An <see cref="Span{T}"/> of type <see cref="byte"/> that is the storage location for received data.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">A reference to an <see cref="EndPoint"/> of the same type as the endpoint of the remote host to be updated on successful receive.</param>
+    /// <param name="ipPacketInformation">An <see cref="IPPacketInformation"/> holding address and interface information.</param>
+    /// <returns>The number of bytes received.</returns>
+    public int ReceiveMessageFrom(Span<byte> buffer, ref SocketFlags socketFlags, ref EndPoint remoteEP, out IPPacketInformation ipPacketInformation);
+
+    /// <summary>
+    /// Begins to asynchronously receive the specified number of bytes of data into the specified location in the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/> and packet information.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>true if the I/O operation is pending. The Completed event on the e parameter will be raised upon completion of the operation. false if the I/O operation completed synchronously.</returns>
+    public bool ReceiveMessageFromAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Receives data and returns additional information about the sender of the message.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="remoteEndPoint">An <see cref="EndPoint"/> of the same type as the endpoint of the remote host.</param>
+    /// <returns>An asynchronous task that completes with a <see cref="SocketReceiveMessageFromResult"/> containing the number of bytes received and additional information about the sending host.</returns>
+    public Task<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(ArraySegment<byte> buffer, EndPoint remoteEndPoint);
+
+    /// <summary>
+    /// Receives data and returns additional information about the sender of the message.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when receiving the data.</param>
+    /// <param name="remoteEndPoint">An <see cref="EndPoint"/> of the same type as the endpoint of the remote host.</param>
+    /// <returns>An asynchronous task that completes with a <see cref="SocketReceiveMessageFromResult"/> containing the number of bytes received and additional information about the sending host.</returns>
+    public Task<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint);
+
+    /// <summary>
+    /// Receives data and returns additional information about the sender of the message.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="remoteEndPoint">An <see cref="EndPoint"/> of the same type as the endpoint of the remote host.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with a <see cref="SocketReceiveMessageFromResult"/> containing the number of bytes received and additional information about the sending host.</returns>
+    public ValueTask<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(Memory<byte> buffer, EndPoint remoteEndPoint, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Receives data and returns additional information about the sender of the message.
+    /// </summary>
+    /// <param name="buffer">The buffer for the received data.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when receiving the data.</param>
+    /// <param name="remoteEndPoint">An <see cref="EndPoint"/> of the same type as the endpoint of the remote host.</param>
+    /// <param name="cancellationToken">A cancellation token that can be used to signal the asynchronous operation should be canceled.</param>
+    /// <returns>An asynchronous task that completes with a <see cref="SocketReceiveMessageFromResult"/> containing the number of bytes received and additional information about the sending host.</returns>
+    public ValueTask<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(Memory<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sends data to a connected <see cref="ISocket"/> using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">A span of <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> enumeration values that specifies send and receive behaviors.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(ReadOnlySpan<byte> buffer, SocketFlags socketFlags, out SocketError errorCode);
+
+    /// <summary>
+    /// Sends data to a connected <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="buffer">A span of <see cref="byte"/> that contains the data to be sent.</param>
+    /// <returns>The number of bytes sent to the Socket.</returns>
+    public int Send(ReadOnlySpan<byte> buffer);
+
+    /// <summary>
+    /// Sends the specified number of bytes of data to a connected <see cref="ISocket"/>, starting at the specified offset, and using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="offset">The position in the data buffer at which to begin sending data.</param>
+    /// <param name="size">The number of bytes to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode);
+
+    /// <summary>
+    /// Sends the set of buffers in the list to a connected <see cref="ISocket"/>, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffers">A list of <see cref="ArraySegment{T}"/>s of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="errorCode">A <see cref="SocketError"/> object that stores the socket error.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode);
+
+    /// <summary>
+    /// Sends the specified number of bytes of data to a connected <see cref="ISocket"/>, starting at the specified offset, and using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="offset">The position in the data buffer at which to begin sending data.</param>
+    /// <param name="size">The number of bytes to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(byte[] buffer, int offset, int size, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Sends the specified number of bytes of data to a connected <see cref="ISocket"/>, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param
+    /// <param name="size">The number of bytes to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(byte[] buffer, int size, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Sends the specified number of bytes of data to a connected <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="buffers">A list of <see cref="ArraySegment{T}"/>s of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(IList<ArraySegment<byte>> buffers);
+
+    /// <summary>
+    /// Sends the set of buffers in the list to a connected <see cref="ISocket"/>, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffers">A list of <see cref="ArraySegment{T}"/>s of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Sends the set of buffers in the list to a connected <see cref="ISocket"/>, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(byte[] buffer, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Sends the set of buffers in the list to a connected <see cref="ISocket"/>, using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">A span of <see cref="byte"/>s that contains the data to be sent.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(ReadOnlySpan<byte> buffer, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Sends the set of buffers in the list to a connected <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <returns>The number of bytes sent to the <see cref="ISocket"/>.</returns>
+    public int Send(byte[] buffer);
+
+    /// <summary>
+    /// Sends data on a connected socket.
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public ValueTask<int> SendAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sends data on a connected socket.
+    /// </summary>
+    /// <param name="buffers">A list of buffers for the data to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public Task<int> SendAsync(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Sends data on a connected socket.
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public Task<int> SendAsync(ArraySegment<byte> buffer, SocketFlags socketFlags);
+
+    /// <summary>
+    /// Sends data on a connected socket
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public ValueTask<int> SendAsync(ReadOnlyMemory<byte> buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sends data on a connected socket.
+    /// </summary>
+    /// <param name="buffers">A list of buffers for the data to send.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public Task<int> SendAsync(IList<ArraySegment<byte>> buffers);
+
+    /// <summary>
+    /// Sends data on a connected socket.
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public Task<int> SendAsync(ArraySegment<byte> buffer);
+
+    /// <summary>
+    /// Sends data asynchronously to a connected <see cref="ISocket"/> object.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>true if the I/O operation is pending. The Completed event on the e parameter will be raised upon completion of the operation.false if the I/O operation completed synchronously. In this case, The Completed event on the e parameter will not be raised and the e object passed as a parameter may be examined immediately after the method call returns to retrieve the result of the operation.</returns>
+    public bool SendAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Sends the file 'fileName' to a connected <see cref="ISocket"/> object with the <see cref="UseDefaultWorkerThread"/> transmit flag.
+    /// </summary>
+    /// <param name="fileName">A <see cref="string"/> that contains the path and name of the file to be sent. This parameter can be null.</param>
+    public void SendFile(string? fileName);
+
+    /// <summary>
+    /// Sends the file 'fileName' and buffers of data to a connected <see cref="ISocket"/> object using the specified <see cref="TransmitFileOptions"/> value.
+    /// </summary>
+    /// <param name="fileName">The path and name of the file to be sent. This parameter can be null.</param>
+    /// <param name="preBuffer">The data to be sent before the file is sent. This parameter can be null.</param>
+    /// <param name="postBuffer">The data to be sent after the file is sent. This parameter can be null.</param>
+    /// <param name="flags">A bitwise combination of the <see cref="TransmitFileOptions"/> enumeration values that specifies how the file is transferred.</param>
+    public void SendFile(string? fileName, byte[]? preBuffer, byte[]? postBuffer, TransmitFileOptions flags);
+
+    /// <summary>
+    /// Sends the file 'fileName' and buffers of data to a connected <see cref="ISocket"/> object using the specified <see cref="TransmitFileOptions"/> value.
+    /// </summary>
+    /// <param name="fileName">The path and name of the file to be sent. This parameter can be null.</param>
+    /// <param name="preBuffer">The data to be sent before the file is sent. This parameter can be null.</param>
+    /// <param name="postBuffer">The data to be sent after the file is sent. This parameter can be null.</param>
+    /// <param name="flags">A bitwise combination of the <see cref="TransmitFileOptions"/> enumeration values that specifies how the file is transferred.</param>
+    public void SendFile(string? fileName, ReadOnlySpan<byte> preBuffer, ReadOnlySpan<byte> postBuffer, TransmitFileOptions flags);
+
+    /// <summary>
+    /// Sends the file 'fileName' to a connected <see cref="ISocket"/> object.
+    /// </summary>
+    /// <param name="fileName">A <see cref="string"/> that contains the path and name of the file to be sent. This parameter can be null.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>A <see cref="ValueTask"/> that represents the asynchronous send file operation.</returns>
+    public ValueTask SendFileAsync(string? fileName, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sends the file 'fileName' and buffers of data to a connected <see cref="ISocket"/> object using the specified <see cref="TransmitFileOptions"/> value.
+    /// </summary>
+    /// <param name="fileName">A <see cref="string"/> that contains the path and name of the file to be sent. This parameter can be null.</param>
+    /// <param name="preBuffer">A <see cref="byte"/> array that contains data to be sent before the file is sent. This parameter can be null.</param>
+    /// <param name="postBuffer">A <see cref="byte"/> array that contains data to be sent after the file is sent. This parameter can be null.</param>
+    /// <param name="flags">One or more of <see cref="TransmitFileOptions"/> values.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>A <see cref="ValueTask"/> that represents the asynchronous send file operation.</returns>
+    public ValueTask SendFileAsync(string? fileName, ReadOnlyMemory<byte> preBuffer, ReadOnlyMemory<byte> postBuffer, TransmitFileOptions flags, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sends a collection of files or in memory data buffers asynchronously to a connected <see cref="ISocket"/> object.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>true if the I/O operation is pending. The Completed event on the e parameter will be raised upon completion of the operation.false if the I/O operation completed synchronously.In this case, The Completed event on the e parameter will not be raised and the e object passed as a parameter may be examined immediately after the method call returns to retrieve the result of the operation.</returns>
+    public bool SendPacketsAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Sends the specified number of bytes of data to the specified <see cref="EndPoint"/>, starting at the specified location in the buffer, and using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="offset">The position in the data buffer at which to begin sending data.</param>
+    /// <param name="size">The number of bytes to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">The <see cref="EndPoint"/> that represents the destination location for the data.</param>
+    /// <returns>The number of bytes sent.</returns>
+    public int SendTo(byte[] buffer, int offset, int size, SocketFlags socketFlags, EndPoint remoteEP);
+
+    /// <summary>
+    /// Sends the specified number of bytes of data to the specified <see cref="EndPoint"/> using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="size">The number of bytes to send.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">The <see cref="EndPoint"/> that represents the destination location for the data.</param>
+    /// <returns>The number of bytes sent.</returns>
+    public int SendTo(byte[] buffer, int size, SocketFlags socketFlags, EndPoint remoteEP);
+
+    /// <summary>
+    /// Sends data to a specific <see cref="SocketAddress"/> using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">A <see cref="ReadOnlySpan{T}"> of <see cref="byte"/>s that contains the data to be sent.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="socketAddress">The <see cref="SocketAddress"/> that represents the destination for the data.</param>
+    /// <returns>The number of bytes sent.</returns>
+    public int SendTo(ReadOnlySpan<byte> buffer, SocketFlags socketFlags, SocketAddress socketAddress);
+
+    /// <summary>
+    /// Sends data to the specified <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">A <see cref="ReadOnlySpan{T}"> of <see cref="byte"/>s that contains the data to be sent.</param>
+    /// <param name="remoteEP">The <see cref="EndPoint"/> that represents the destination location for the data.</param>
+    /// <returns>The number of bytes sent.</returns>
+    public int SendTo(ReadOnlySpan<byte> buffer, EndPoint remoteEP);
+
+    /// <summary>
+    /// Sends data to the specified <see cref="EndPoint"/> using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="socketFlags">A bitwise combination of the <see cref="SocketFlags"/> values.</param>
+    /// <param name="remoteEP">The <see cref="EndPoint"/> that represents the destination location for the data.</param>
+    /// <returns>The number of bytes sent.</returns>
+    public int SendTo(byte[] buffer, SocketFlags socketFlags, EndPoint remoteEP);
+
+    /// <summary>
+    /// Sends data to the specified <see cref="EndPoint"/>.
+    /// </summary>
+    /// <param name="buffer">An array of type <see cref="byte"/> that contains the data to be sent.</param>
+    /// <param name="remoteEP">The <see cref="EndPoint"/> that represents the destination location for the data.</param>
+    /// <returns>The number of bytes sent.</returns>
+    public int SendTo(byte[] buffer, EndPoint remoteEP);
+
+    /// <summary>
+    /// Sends data asynchronously to a specific remote host.
+    /// </summary>
+    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <returns>true if the I/O operation is pending. The Completed event on the e parameter will be raised upon completion of the operation. false if the I/O operation completed synchronously. In this case, The Completed event on the e parameter will not be raised and the e object passed as a parameter may be examined immediately after the method call returns to retrieve the result of the operation.</returns>
+    public bool SendToAsync(SocketAsyncEventArgs e);
+
+    /// <summary>
+    /// Sends data to the specified remote host.
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <param name="remoteEP">The remote host to which to send the data.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public Task<int> SendToAsync(ArraySegment<byte> buffer, EndPoint remoteEP);
+
+    /// <summary>
+    /// Sends data to the specified remote host.
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when sending the data.</param>
+    /// <param name="remoteEP">The remote host to which to send the data.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent</returns>
+    public Task<int> SendToAsync(ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEP);
+
+    /// <summary>
+    /// Sends data to the specified remote host.
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <param name="remoteEP">The remote host to which to send the data.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public ValueTask<int> SendToAsync(ReadOnlyMemory<byte> buffer, EndPoint remoteEP, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sends data to the specified remote host.
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when sending the data.</param>
+    /// <param name="remoteEP">The remote host to which to send the data.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public ValueTask<int> SendToAsync(ReadOnlyMemory<byte> buffer, SocketFlags socketFlags, EndPoint remoteEP, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sends data to a specific <see cref="SocketAddress"/> using the specified <see cref="SocketFlags"/>.
+    /// </summary>
+    /// <param name="buffer">The buffer for the data to send.</param>
+    /// <param name="socketFlags">A bitwise combination of <see cref="SocketFlags"/> values that will be used when sending the data.</param>
+    /// <param name="socketAddress">The <see cref="SocketAddress"/> that represents the destination for the data.</param>
+    /// <param name="cancellationToken">A <see cref="CancellationToken"/> that can be used to cancel the asynchronous operation.</param>
+    /// <returns>An asynchronous task that completes with the number of bytes sent.</returns>
+    public ValueTask<int> SendToAsync(ReadOnlyMemory<byte> buffer, SocketFlags socketFlags, SocketAddress socketAddress, CancellationToken cancellationToken = default);
+
+    /// <summary>
+    /// Sets the IP protection level on a socket.
+    /// </summary>
+    /// <param name="level">The IP protection level to set on this socket.</param>
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+    public void SetIPProtectionLevel(IPProtectionLevel level);
+
+    /// <summary>
+    /// Sets a socket option value using platform-specific level and name identifiers.
+    /// </summary>
+    /// <param name="optionLevel">The platform-defined option level.</param>
+    /// <param name="optionName">The platform-defined option name.</param>
+    /// <param name="optionValue">The value to which the option should be set.</param>
+    public void SetRawSocketOption(int optionLevel, int optionName, ReadOnlySpan<byte> optionValue);
+
+    /// <summary>
+    /// Sets the specified Socket option to the specified Boolean value.
+    /// </summary>
+    /// <param name="optionLevel">One of the <see cref="SocketOptionLevel"/> values.</param>
+    /// <param name="optionName">One of the <see cref="SocketOptionName"/> values.</param>
+    /// <param name="optionValue">The value of the option, represented as a <see cref="bool"/>.</param>
+    public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, bool optionValue);
+
+    /// <summary>
+    /// Sets the specified Socket option to the specified value, represented as a byte array.
+    /// </summary>
+    /// <param name="optionLevel">One of the <see cref="SocketOptionLevel"/> values.</param>
+    /// <param name="optionName">One of the <see cref="SocketOptionName"/> values.</param>
+    /// <param name="optionValue">An array of type <see cref="byte"/> that represents the value of the option.</param>
+    public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, byte[] optionValue);
+
+    /// <summary>
+    /// Sets the specified Socket option to the specified integer value.
+    /// </summary>
+    /// <param name="optionLevel">One of the <see cref="SocketOptionLevel"/> values.</param>
+    /// <param name="optionName">One of the <see cref="SocketOptionName"/> values.</param>
+    /// <param name="optionValue">A value of the option.</param>
+    public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optionValue);
+
+    /// <summary>
+    /// Sets the specified Socket option to the specified value, represented as an object.
+    /// </summary>
+    /// <param name="optionLevel">One of the <see cref="SocketOptionLevel"/> values.</param>
+    /// <param name="optionName">One of the <see cref="SocketOptionName"/> values.</param>
+    /// <param name="optionValue">A <see cref="LingerOption"/> or <see cref="MulticastOption"/> that contains the value of the option.</param>
+    public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, object optionValue);
+
+    /// <summary>
+    /// Disables sends and receives on an <see cref="ISocket"/>.
+    /// </summary>
+    /// <param name="how">One of the <see cref="SocketShutdown"/> values that specifies the operation that will no longer be allowed.</param>
+    public void Shutdown(SocketShutdown how);
 }

@@ -1,4 +1,5 @@
 ﻿using MockableTcp.Interfaces;
+using System.Collections;
 using System.Net;
 using System.Net.Sockets;
 
@@ -466,32 +467,636 @@ public class SocketW : ISocket
         throw new NotImplementedException();
     }
 
-
     /// <inheritdoc/>
-    public int Send(byte[] buffer, SocketFlags socketFlags, out SocketError errorCode)
+    public void EndConnect(IAsyncResult asyncResult)
     {
-        return _socket.Send(buffer, socketFlags, out errorCode);
+        _socket.EndConnect(asyncResult);
     }
 
     /// <inheritdoc/>
-    public async Task<int> SendAsync(byte[] buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default)
+    public void EndDisconnect(IAsyncResult asyncResult)
     {
-        return await _socket.SendAsync(buffer, socketFlags, cancellationToken);
+        _socket.EndDisconnect(asyncResult);
     }
 
     /// <inheritdoc/>
-    public int Receive(byte[] buffer, SocketFlags socketFlags, out SocketError errorCode)
+    public int EndReceive(IAsyncResult asyncResult)
+    {
+        return _socket.EndReceive(asyncResult);
+    }
+
+    /// <inheritdoc/>
+    public int EndReceive(IAsyncResult asyncResult, out SocketError errorCode)
+    {
+        return _socket.EndReceive(asyncResult, out errorCode);
+    }
+
+    /// <inheritdoc/>
+    public int EndReceiveFrom(IAsyncResult asyncResult, ref EndPoint endPoint)
+    {
+        return _socket.EndReceiveFrom(asyncResult, ref endPoint);
+    }
+
+    /// <inheritdoc/>
+    public int EndReceiveMessageFrom(IAsyncResult asyncResult, ref SocketFlags socketFlags, ref EndPoint endPoint, out IPPacketInformation ipPacketInformation)
+    {
+        return _socket.EndReceiveMessageFrom(asyncResult, ref  socketFlags, ref endPoint, out ipPacketInformation);
+    }
+
+    /// <inheritdoc/>
+    public int EndSend(IAsyncResult asyncResult)
+    {
+        return _socket.EndSend(asyncResult);
+    }
+
+    /// <inheritdoc/>
+    public int EndSend(IAsyncResult asyncResult, out SocketError errorCode)
+    {
+        return _socket.EndSend(asyncResult, out errorCode);
+    }
+
+    /// <inheritdoc/>
+    public void EndSendFile(IAsyncResult asyncResult)
+    {
+        _socket.EndSendFile(asyncResult);
+    }
+
+    /// <inheritdoc/>
+    public int EndSendTo(IAsyncResult asyncResult)
+    {
+        return _socket.EndSendTo(asyncResult);
+    }
+
+    /// <inheritdoc/>
+    public int GetRawSocketOption(int optionLevel, int optionName, Span<byte> optionValue)
+    {
+        return _socket.GetRawSocketOption(optionLevel, optionName, optionValue);
+    }
+
+    /// <inheritdoc/>
+    public void GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, byte[] optionValue)
+    {
+        _socket.GetSocketOption(optionLevel, optionName, optionValue);
+    }
+
+    /// <inheritdoc/>
+    public byte[] GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optionLength)
+    {
+        return _socket.GetSocketOption(optionLevel, optionName, optionLength);
+    }
+
+    /// <inheritdoc/>
+    public object? GetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName)
+    {
+        return _socket.GetSocketOption(optionLevel, optionName);
+    }
+
+    /// <inheritdoc/>
+    public int IOControl(int ioControlCode, byte[]? optionInValue, byte[]? optionOutValue)
+    {
+        return _socket.IOControl(ioControlCode, optionInValue, optionOutValue);
+    }
+
+    /// <inheritdoc/>
+    public int IOControl(IOControlCode ioControlCode, byte[]? optionInValue, byte[]? optionOutValue)
+    {
+        return _socket.IOControl(ioControlCode, optionInValue, optionOutValue);
+    }
+
+    /// <inheritdoc/>
+    public void Listen()
+    {
+        _socket.Listen();
+    }
+
+    /// <inheritdoc/>
+    public void Listen(int backlog)
+    {
+        _socket.Listen(backlog);
+    }
+
+    /// <inheritdoc/>
+    public bool Poll(TimeSpan timeout, SelectMode mode)
+    {
+        return _socket.Poll(timeout, mode);
+    }
+
+    /// <inheritdoc/>
+    public bool Poll(int microSeconds, SelectMode mode)
+    {
+        return _socket.Poll(microSeconds, mode);
+    }
+
+    /// <inheritdoc/>
+    public int Receive(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode)
+    {
+        return _socket.Receive(buffer, offset, size, socketFlags, out errorCode);
+    }
+
+    /// <inheritdoc/>
+    public int Receive(Span<byte> buffer, SocketFlags socketFlags, out SocketError errorCode)
     {
         return _socket.Receive(buffer, socketFlags, out errorCode);
     }
 
     /// <inheritdoc/>
-    public async Task<int> ReceiveAsync(byte[] buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default)
+    public int Receive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode)
     {
-        return await _socket.ReceiveAsync(buffer, SocketFlags.None, cancellationToken);
+        return _socket.Receive(buffers, socketFlags, out errorCode);
     }
 
+    /// <inheritdoc/>
+    public int Receive(byte[] buffer, int size, SocketFlags socketFlags)
+    {
+        return _socket.Receive(buffer, size, socketFlags);
+    }
 
+    /// <inheritdoc/>
+    public int Receive(Span<byte> buffer, SocketFlags socketFlags)
+    {
+        return _socket.Receive(buffer, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public int Receive(byte[] buffer, int offset, int size, SocketFlags socketFlags)
+    {
+        return _socket.Receive(buffer, offset, size, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public int Receive(byte[] buffer, SocketFlags socketFlags)
+    {
+        return _socket.Receive(buffer, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public int Receive(Span<byte> buffer)
+    {
+        return _socket.Receive(buffer);
+    }
+
+    /// <inheritdoc/>
+    public int Receive(IList<ArraySegment<byte>> buffers)
+    {
+        return _socket.Receive(buffers);
+    }
+
+    /// <inheritdoc/>
+    public int Receive(byte[] buffer)
+    {
+        return _socket.Receive(buffer);
+    }
+
+    /// <inheritdoc/>
+    public int Receive(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags)
+    {
+        return _socket.Receive(buffers, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> ReceiveAsync(ArraySegment<byte> buffer)
+    {
+        return _socket.ReceiveAsync(buffer);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> ReceiveAsync(IList<ArraySegment<byte>> buffers)
+    {
+        return _socket.ReceiveAsync(buffers);
+    }
+
+    /// <inheritdoc/>
+    public bool ReceiveAsync(SocketAsyncEventArgs e)
+    {
+        return _socket.ReceiveAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> ReceiveAsync(ArraySegment<byte> buffer, SocketFlags socketFlags)
+    {
+        return _socket.ReceiveAsync(buffer, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> ReceiveAsync(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags)
+    {
+        return _socket.ReceiveAsync(buffers, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<int> ReceiveAsync(Memory<byte> buffer, CancellationToken cancellationToken = default)
+    {
+        return _socket.ReceiveAsync(buffer, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<int> ReceiveAsync(Memory<byte> buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default)
+    {
+        return _socket.ReceiveAsync(buffer, socketFlags, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveFrom(byte[] buffer, int size, SocketFlags socketFlags, ref EndPoint remoteEP)
+    {
+        return _socket.ReceiveFrom(buffer, size, socketFlags, ref remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP)
+    {
+        return _socket.ReceiveFrom(buffer, offset, size, socketFlags, ref remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveFrom(Span<byte> buffer, SocketFlags socketFlags, ref EndPoint remoteEP)
+    {
+        return _socket.ReceiveFrom(buffer, socketFlags, ref remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveFrom(byte[] buffer, SocketFlags socketFlags, ref EndPoint remoteEP)
+    {
+        return _socket.ReceiveFrom(buffer, socketFlags, ref remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveFrom(Span<byte> buffer, SocketFlags socketFlags, SocketAddress receivedAddress)
+    {
+        return _socket.ReceiveFrom(buffer, socketFlags, receivedAddress);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveFrom(Span<byte> buffer, ref EndPoint remoteEP)
+    {
+        return _socket.ReceiveFrom(buffer, ref remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveFrom(byte[] buffer, ref EndPoint remoteEP)
+    {
+        return _socket.ReceiveFrom(buffer, ref remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public bool ReceiveFromAsync(SocketAsyncEventArgs e)
+    {
+        return _socket.ReceiveFromAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public Task<SocketReceiveFromResult> ReceiveFromAsync(ArraySegment<byte> buffer, EndPoint remoteEndPoint)
+    {
+        return _socket.ReceiveFromAsync(buffer, remoteEndPoint);
+    }
+
+    /// <inheritdoc/>
+    public Task<SocketReceiveFromResult> ReceiveFromAsync(ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint)
+    {
+        return _socket.ReceiveFromAsync(buffer, socketFlags, remoteEndPoint);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<SocketReceiveFromResult> ReceiveFromAsync(Memory<byte> buffer, EndPoint remoteEndPoint, CancellationToken cancellationToken = default)
+    {
+        return _socket.ReceiveFromAsync(buffer, remoteEndPoint, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<SocketReceiveFromResult> ReceiveFromAsync(Memory<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint, CancellationToken cancellationToken = default)
+    {
+        return _socket.ReceiveFromAsync(buffer, socketFlags, remoteEndPoint, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<int> ReceiveFromAsync(Memory<byte> buffer, SocketFlags socketFlags, SocketAddress receivedAddress, CancellationToken cancellationToken = default)
+    {
+        return _socket.ReceiveFromAsync(buffer, socketFlags, receivedAddress, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveMessageFrom(byte[] buffer, int offset, int size, ref SocketFlags socketFlags, ref EndPoint remoteEP, out IPPacketInformation ipPacketInformation)
+    {
+        return _socket.ReceiveMessageFrom(buffer, offset, size, ref socketFlags, ref remoteEP, out ipPacketInformation);
+    }
+
+    /// <inheritdoc/>
+    public int ReceiveMessageFrom(Span<byte> buffer, ref SocketFlags socketFlags, ref EndPoint remoteEP, out IPPacketInformation ipPacketInformation)
+    {
+        return _socket.ReceiveMessageFrom(buffer, ref socketFlags, ref remoteEP, out ipPacketInformation);
+    }
+
+    /// <inheritdoc/>
+    public bool ReceiveMessageFromAsync(SocketAsyncEventArgs e)
+    {
+        return _socket.ReceiveMessageFromAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public Task<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(ArraySegment<byte> buffer, EndPoint remoteEndPoint)
+    {
+        return _socket.ReceiveMessageFromAsync(buffer, remoteEndPoint);
+    }
+
+    /// <inheritdoc/>
+    public Task<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint)
+    {
+        return _socket.ReceiveMessageFromAsync(buffer, socketFlags, remoteEndPoint);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(Memory<byte> buffer, EndPoint remoteEndPoint, CancellationToken cancellationToken = default)
+    {
+        return _socket.ReceiveMessageFromAsync(buffer, remoteEndPoint, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<SocketReceiveMessageFromResult> ReceiveMessageFromAsync(Memory<byte> buffer, SocketFlags socketFlags, EndPoint remoteEndPoint, CancellationToken cancellationToken = default)
+    {
+        return _socket.ReceiveMessageFromAsync(buffer, socketFlags, remoteEndPoint, cancellationToken);
+    }
+
+    /// <summary>
+    /// Determines the status of one or more sockets.
+    /// </summary>
+    /// <param name="checkRead">An <see cref="IList"/> of Socket instances to check for readability.</param>
+    /// <param name="checkWrite">An <see cref="IList"/> of Socket instances to check for writability.</param>
+    /// <param name="checkError">An <see cref="IList"/> of Socket instances to check for errors.</param>
+    /// <param name="timeout">The timeout value. A value equal to -1 microseconds indicates an infinite timeout.</param>
+    public static void Select(IList? checkRead, IList? checkWrite, IList? checkError, TimeSpan timeout)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <summary>
+    /// Determines the status of one or more sockets.
+    /// </summary>
+    /// <param name="checkRead">An <see cref="IList"/> of Socket instances to check for readability.</param>
+    /// <param name="checkWrite">An <see cref="IList"/> of Socket instances to check for writability.</param>
+    /// <param name="checkError">An <see cref="IList"/> of Socket instances to check for errors.</param>
+    /// <param name="microSeconds">The time-out value, in microseconds. A -1 value indicates an infinite time-out.</param>
+    public static void Select(IList? checkRead, IList? checkWrite, IList? checkError, int microSeconds)
+    {
+        throw new NotImplementedException();
+    }
+
+    /// <inheritdoc/>
+    public int Send(ReadOnlySpan<byte> buffer, SocketFlags socketFlags, out SocketError errorCode)
+    {
+        return _socket.Send(buffer, socketFlags, out errorCode);
+    }
+
+    /// <inheritdoc/>
+    public int Send(ReadOnlySpan<byte> buffer)
+    {
+        return _socket.Send(buffer);
+    }
+
+    /// <inheritdoc/>
+    public int Send(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode)
+    {
+        return _socket.Send(buffer, offset, size, socketFlags, out errorCode);
+    }
+
+    /// <inheritdoc/>
+    public int Send(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode)
+    {
+        return _socket.Send(buffers, socketFlags, out errorCode);
+    }
+
+    /// <inheritdoc/>
+    public int Send(byte[] buffer, int offset, int size, SocketFlags socketFlags)
+    {
+        return _socket.Send(buffer, offset, size, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public int Send(byte[] buffer, int size, SocketFlags socketFlags)
+    {
+        return _socket.Send(buffer, size, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public int Send(IList<ArraySegment<byte>> buffers)
+    {
+        return _socket.Send(buffers);
+    }
+
+    /// <inheritdoc/>
+    public int Send(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags)
+    {
+        return _socket.Send(buffers, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public int Send(byte[] buffer, SocketFlags socketFlags)
+    {
+        return _socket.Send(buffer, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public int Send(ReadOnlySpan<byte> buffer, SocketFlags socketFlags)
+    {
+        return _socket.Send(buffer, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public int Send(byte[] buffer)
+    {
+        return _socket.Send(buffer);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<int> SendAsync(ReadOnlyMemory<byte> buffer, CancellationToken cancellationToken = default)
+    {
+        return _socket.SendAsync(buffer, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> SendAsync(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags)
+    {
+        return _socket.SendAsync(buffers, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> SendAsync(ArraySegment<byte> buffer, SocketFlags socketFlags)
+    {
+        return _socket.SendAsync(buffer, socketFlags);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<int> SendAsync(ReadOnlyMemory<byte> buffer, SocketFlags socketFlags, CancellationToken cancellationToken = default)
+    {
+        return _socket.SendAsync(buffer, socketFlags, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> SendAsync(IList<ArraySegment<byte>> buffers)
+    {
+        return _socket.SendAsync(buffers);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> SendAsync(ArraySegment<byte> buffer)
+    {
+        return _socket.SendAsync(buffer);
+    }
+
+    /// <inheritdoc/>
+    public bool SendAsync(SocketAsyncEventArgs e)
+    {
+        return _socket.SendAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public void SendFile(string? fileName)
+    {
+        _socket.SendFile(fileName);
+    }
+
+    /// <inheritdoc/>
+    public void SendFile(string? fileName, byte[]? preBuffer, byte[]? postBuffer, TransmitFileOptions flags)
+    {
+        _socket.SendFile(fileName, preBuffer, postBuffer, flags);
+    }
+
+    /// <inheritdoc/>
+    public void SendFile(string? fileName, ReadOnlySpan<byte> preBuffer, ReadOnlySpan<byte> postBuffer, TransmitFileOptions flags)
+    {
+        _socket.SendFile(fileName, preBuffer, postBuffer, flags);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask SendFileAsync(string? fileName, CancellationToken cancellationToken = default)
+    {
+        return _socket.SendFileAsync(fileName, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask SendFileAsync(string? fileName, ReadOnlyMemory<byte> preBuffer, ReadOnlyMemory<byte> postBuffer, TransmitFileOptions flags, CancellationToken cancellationToken = default)
+    {
+        return _socket.SendFileAsync(fileName, preBuffer, postBuffer, flags, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public bool SendPacketsAsync(SocketAsyncEventArgs e)
+    {
+        return _socket.SendPacketsAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public int SendTo(byte[] buffer, int offset, int size, SocketFlags socketFlags, EndPoint remoteEP)
+    {
+        return _socket.SendTo(buffer, offset, size, socketFlags, remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int SendTo(byte[] buffer, int size, SocketFlags socketFlags, EndPoint remoteEP)
+    {
+        return _socket.SendTo(buffer, size, socketFlags, remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int SendTo(ReadOnlySpan<byte> buffer, SocketFlags socketFlags, SocketAddress socketAddress)
+    {
+        return _socket.SendTo(buffer, socketFlags, socketAddress);
+    }
+
+    /// <inheritdoc/>
+    public int SendTo(ReadOnlySpan<byte> buffer, EndPoint remoteEP)
+    {
+        return _socket.SendTo(buffer, remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int SendTo(byte[] buffer, SocketFlags socketFlags, EndPoint remoteEP)
+    {
+        return _socket.SendTo(buffer, socketFlags, remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public int SendTo(byte[] buffer, EndPoint remoteEP)
+    {
+        return _socket.SendTo(buffer, remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public bool SendToAsync(SocketAsyncEventArgs e)
+    {
+        return _socket.SendToAsync(e);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> SendToAsync(ArraySegment<byte> buffer, EndPoint remoteEP)
+    {
+        return _socket.SendToAsync(buffer, remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public Task<int> SendToAsync(ArraySegment<byte> buffer, SocketFlags socketFlags, EndPoint remoteEP)
+    {
+        return _socket.SendToAsync(buffer, socketFlags, remoteEP);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<int> SendToAsync(ReadOnlyMemory<byte> buffer, EndPoint remoteEP, CancellationToken cancellationToken = default)
+    {
+        return _socket.SendToAsync(buffer, remoteEP, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<int> SendToAsync(ReadOnlyMemory<byte> buffer, SocketFlags socketFlags, EndPoint remoteEP, CancellationToken cancellationToken = default)
+    {
+        return _socket.SendToAsync(buffer, socketFlags, remoteEP, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    public ValueTask<int> SendToAsync(ReadOnlyMemory<byte> buffer, SocketFlags socketFlags, SocketAddress socketAddress, CancellationToken cancellationToken = default)
+    {
+        return _socket.SendToAsync(buffer, socketFlags, socketAddress, cancellationToken);
+    }
+
+    /// <inheritdoc/>
+    [System.Runtime.Versioning.SupportedOSPlatform("windows")]
+    public void SetIPProtectionLevel(IPProtectionLevel level)
+    {
+        _socket.SetIPProtectionLevel(level);
+    }
+
+    /// <inheritdoc/>
+    public void SetRawSocketOption(int optionLevel, int optionName, ReadOnlySpan<byte> optionValue)
+    {
+        _socket.SetRawSocketOption(optionLevel, optionName, optionValue);
+    }
+
+    /// <inheritdoc/>
+    public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, bool optionValue)
+    {
+        _socket.SetSocketOption(optionLevel, optionName, optionValue);
+    }
+
+    /// <inheritdoc/>
+    public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, byte[] optionValue)
+    {
+        _socket.SetSocketOption(optionLevel, optionName, optionValue);
+    }
+
+    /// <inheritdoc/>
+    public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, int optionValue)
+    {
+        _socket.SetSocketOption(optionLevel, optionName, optionValue);
+    }
+
+    /// <inheritdoc/>
+    public void SetSocketOption(SocketOptionLevel optionLevel, SocketOptionName optionName, object optionValue)
+    {
+        _socket.SetSocketOption(optionLevel , optionName , optionValue);
+    }
+
+    /// <inheritdoc/>
+    public void Shutdown(SocketShutdown how)
+    {
+        _socket.Shutdown(how);
+    }
 
     ~SocketW()
     {
