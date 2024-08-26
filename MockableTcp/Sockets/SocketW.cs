@@ -145,13 +145,13 @@ public class SocketW : ISocket
     /// <inheritdoc/>
     public ISocket Accept()
     {
-        throw new NotImplementedException();
+        return new SocketW(_socket.Accept());
     }
 
     /// <inheritdoc/>
-    public Task<ISocket> AcceptAsync()
+    public async Task<ISocket> AcceptAsync()
     {
-        throw new NotImplementedException();
+        return new SocketW(await _socket.AcceptAsync());
     }
 
     /// <inheritdoc/>
@@ -167,9 +167,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public ValueTask<ISocket> AcceptAsync(CancellationToken cancellationToken = default)
+    public async ValueTask<ISocket> AcceptAsync(CancellationToken cancellationToken = default)
     {
-        throw new NotImplementedException();
+        return new SocketW(await _socket.AcceptAsync(cancellationToken));
     }
 
     /// <inheritdoc/>
