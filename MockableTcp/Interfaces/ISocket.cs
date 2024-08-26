@@ -129,6 +129,11 @@ public interface ISocket : IDisposable
     public int SendTimeout { get; set; }
 
     /// <summary>
+    /// Gets the encapsulated socket.
+    /// </summary>
+    public Socket Socket { get; }
+
+    /// <summary>
     /// Gets the type of the Socket.
     /// </summary>
     public SocketType SocketType { get; }
