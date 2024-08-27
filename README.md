@@ -12,7 +12,7 @@ This library aims to provide mockable classes for socket communication in .Net C
 **Right now, most of the Socket class is implemented but untested - some async methods are not implemented yet.**
 
 ## Download
-You can acquire this library either directly via the NuGet package manager or by downloading it from the [NuGet Gallery](https://www.nuget.org/packages/philipp2604.WpfNavigation/).
+You can acquire this library either directly via the NuGet package manager or by downloading it from the [NuGet Gallery](https://www.nuget.org/packages/philipp2604.MockableSocket/).
 
 ## Questions? Problems?
 **Feel free to reach out!**
