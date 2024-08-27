@@ -13,7 +13,7 @@
     <Copyright>Philipp Siewert</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
-    <PackageTags>tcp; mock; mockable; network; tcpclient</PackageTags>
+    <PackageTags>socket; mock; mockable; network;</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
     <PackageProjectUrl>https://github.com/philipp2604/MockableSocket</PackageProjectUrl>
