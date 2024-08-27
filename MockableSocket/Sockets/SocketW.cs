@@ -830,7 +830,38 @@ public class SocketW : ISocket
     /// <param name="timeout">The timeout value. A value equal to -1 microseconds indicates an infinite timeout.</param>
     public static void Select(IList? checkRead, IList? checkWrite, IList? checkError, TimeSpan timeout)
     {
-        throw new NotImplementedException();
+        List<Socket>? checkReadList = null;
+        List<Socket>? checkWriteList = null;
+        List<Socket>? checkErrorList = null;
+
+        if (checkRead != null)
+        {
+            checkReadList = [];
+            foreach (ISocket sock in checkRead)
+            {
+                checkReadList.Add(sock.Socket);
+            }
+        }
+
+        if (checkWrite != null)
+        {
+            checkWriteList = [];
+            foreach (ISocket sock in checkWrite)
+            {
+                checkWriteList.Add(sock.Socket);
+            }
+        }
+
+        if (checkError != null)
+        {
+            checkErrorList = [];
+            foreach (ISocket sock in checkError)
+            {
+                checkErrorList.Add(sock.Socket);
+            }
+        }
+
+        Socket.Select(checkReadList, checkWriteList, checkErrorList, timeout);
     }
 
     /// <summary>
@@ -842,7 +873,38 @@ public class SocketW : ISocket
     /// <param name="microSeconds">The time-out value, in microseconds. A -1 value indicates an infinite time-out.</param>
     public static void Select(IList? checkRead, IList? checkWrite, IList? checkError, int microSeconds)
     {
-        throw new NotImplementedException();
+        List<Socket>? checkReadList = null;
+        List<Socket>? checkWriteList = null;
+        List<Socket>? checkErrorList = null;
+
+        if(checkRead != null)
+        {
+            checkReadList = [];
+            foreach (ISocket sock in checkRead)
+            {
+                checkReadList.Add(sock.Socket);
+            }
+        }
+
+        if (checkWrite != null)
+        {
+            checkWriteList = [];
+            foreach (ISocket sock in checkWrite)
+            {
+                checkWriteList.Add(sock.Socket);
+            }
+        }
+
+        if (checkError != null)
+        {
+            checkErrorList = [];
+            foreach (ISocket sock in checkError)
+            {
+                checkErrorList.Add(sock.Socket);
+            }
+        }
+
+        Socket.Select(checkReadList, checkWriteList, checkErrorList, microSeconds);
     }
 
     /// <inheritdoc/>
