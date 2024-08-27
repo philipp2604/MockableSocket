@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace MockableTcp.Interfaces;
+namespace MockableTcp.Interfaces.Sockets;
 
 #pragma warning disable RCS1047 // Non-asynchronous method name should not end with 'Async'
 public interface ISocket : IDisposable
@@ -51,7 +51,7 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Gets the operating system handle for the Socket.
     /// </summary>
-    public IntPtr Handle { get; }
+    public nint Handle { get; }
 
     /// <summary>
     /// Gets a value that indicates whether the Socket is bound to a specific local port.
@@ -691,7 +691,7 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Sets low-level operating modes for the Socket using numerical control codes.
     /// </summary>
-    /// <param name="ioControlCode">An <see cref="Int32"/> value that specifies the control code of the operation to perform.</param>
+    /// <param name="ioControlCode">An <see cref="int"/> value that specifies the control code of the operation to perform.</param>
     /// <param name="optionInValue">A <see cref="byte"/> array that contains the input data required by the operation.</param>
     /// <param name="optionOutValue">A <see cref="byte"/> array that contains the output data returned by the operation.</param>
     /// <returns>The number of bytes in the optionOutValue parameter.</returns>

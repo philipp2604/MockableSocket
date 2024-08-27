@@ -1,4 +1,4 @@
-﻿using MockableTcp.Interfaces;
+﻿using MockableTcp.Interfaces.Sockets;
 using System.Net.Sockets;
 
 namespace MockableTcp.Sockets;
