@@ -18,7 +18,7 @@ You can acquire this library either directly via the NuGet package manager or by
 **Feel free to reach out!**
 
 ## Ideas / TODO
-* Complete implementation of Socket class.
+* Wrappers, like TcpClient... ?
 
 ## License
 This library is [MIT licensed](https://github.com/philipp2604/MockableSocket/blob/master/LICENSE.txt).
