@@ -165,9 +165,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool AcceptAsync(SocketAsyncEventArgs e)
+    public bool AcceptAsync(SocketWAsyncEventArgs e)
     {
-        throw new NotImplementedException();
+        return Socket.AcceptAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -263,49 +263,49 @@ public class SocketW : ISocket
     /// <inheritdoc/>
     public IAsyncResult BeginReceiveMessageFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginReceiveMessageFrom(buffer, offset, size, socketFlags, ref remoteEP, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSend(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSend(buffers, socketFlags, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult? BeginSend(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSend(buffers, socketFlags, out errorCode, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSend(buffer, offset, size, socketFlags, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult? BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSend(buffer, offset, size, socketFlags, out errorCode, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSendFile(string? fileName, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSendFile(fileName, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSendFile(string? fileName, byte[]? preBuffer, byte[]? postBuffer, TransmitFileOptions flags, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSendFile(fileName, preBuffer, postBuffer, flags, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSendTo(byte[] buffer, int offset, int size, SocketFlags socketFlags, EndPoint remoteEP, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSendTo(buffer, offset, size, socketFlags, remoteEP, callback, state);
     }
 
     /// <inheritdoc/>
@@ -317,10 +317,10 @@ public class SocketW : ISocket
     /// <summary>
     /// Cancels an asynchronous request for a remote host connection.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object used to request the connection to the remote host by calling one of the <see cref="ConnectAsync(SocketType, ProtocolType, SocketAsyncEventArgs)"/> methods.</param>
-    public static void CancelConnectAsync(SocketAsyncEventArgs e)
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object used to request the connection to the remote host by calling one of the <see cref="ConnectAsync(SocketType, ProtocolType, SocketWAsyncEventArgs)"/> methods.</param>
+    public static void CancelConnectAsync(SocketWAsyncEventArgs e)
     {
-        Socket.CancelConnectAsync(e);
+        Socket.CancelConnectAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -402,9 +402,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool ConnectAsync(SocketAsyncEventArgs e)
+    public bool ConnectAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.ConnectAsync(e);
+        return Socket.ConnectAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -420,9 +420,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool DisconnectAsync(SocketAsyncEventArgs e)
+    public bool DisconnectAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.DisconnectAsync(e);
+        return Socket.DisconnectAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -458,19 +458,19 @@ public class SocketW : ISocket
     /// <inheritdoc/>
     public ISocket EndAccept(IAsyncResult asyncResult)
     {
-        throw new NotImplementedException();
+        return new SocketW(Socket.EndAccept(asyncResult));
     }
 
     /// <inheritdoc/>
     public ISocket EndAccept(out byte[] buffer, IAsyncResult asyncResult)
     {
-        throw new NotImplementedException();
+        return new SocketW(Socket.EndAccept(out buffer, asyncResult));
     }
 
     /// <inheritdoc/>
     public ISocket EndAccept(out byte[] buffer, out int bytesTransferred, IAsyncResult asyncResult)
     {
-        throw new NotImplementedException();
+        return new SocketW(Socket.EndAccept(out buffer, out bytesTransferred, asyncResult));
     }
 
     /// <inheritdoc/>
@@ -672,9 +672,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool ReceiveAsync(SocketAsyncEventArgs e)
+    public bool ReceiveAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.ReceiveAsync(e);
+        return Socket.ReceiveAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -744,9 +744,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool ReceiveFromAsync(SocketAsyncEventArgs e)
+    public bool ReceiveFromAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.ReceiveFromAsync(e);
+        return Socket.ReceiveFromAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -792,9 +792,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool ReceiveMessageFromAsync(SocketAsyncEventArgs e)
+    public bool ReceiveMessageFromAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.ReceiveMessageFromAsync(e);
+        return Socket.ReceiveMessageFromAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -830,7 +830,38 @@ public class SocketW : ISocket
     /// <param name="timeout">The timeout value. A value equal to -1 microseconds indicates an infinite timeout.</param>
     public static void Select(IList? checkRead, IList? checkWrite, IList? checkError, TimeSpan timeout)
     {
-        throw new NotImplementedException();
+        List<Socket>? checkReadList = null;
+        List<Socket>? checkWriteList = null;
+        List<Socket>? checkErrorList = null;
+
+        if (checkRead != null)
+        {
+            checkReadList = [];
+            foreach (ISocket sock in checkRead)
+            {
+                checkReadList.Add(sock.Socket);
+            }
+        }
+
+        if (checkWrite != null)
+        {
+            checkWriteList = [];
+            foreach (ISocket sock in checkWrite)
+            {
+                checkWriteList.Add(sock.Socket);
+            }
+        }
+
+        if (checkError != null)
+        {
+            checkErrorList = [];
+            foreach (ISocket sock in checkError)
+            {
+                checkErrorList.Add(sock.Socket);
+            }
+        }
+
+        Socket.Select(checkReadList, checkWriteList, checkErrorList, timeout);
     }
 
     /// <summary>
@@ -842,7 +873,38 @@ public class SocketW : ISocket
     /// <param name="microSeconds">The time-out value, in microseconds. A -1 value indicates an infinite time-out.</param>
     public static void Select(IList? checkRead, IList? checkWrite, IList? checkError, int microSeconds)
     {
-        throw new NotImplementedException();
+        List<Socket>? checkReadList = null;
+        List<Socket>? checkWriteList = null;
+        List<Socket>? checkErrorList = null;
+
+        if(checkRead != null)
+        {
+            checkReadList = [];
+            foreach (ISocket sock in checkRead)
+            {
+                checkReadList.Add(sock.Socket);
+            }
+        }
+
+        if (checkWrite != null)
+        {
+            checkWriteList = [];
+            foreach (ISocket sock in checkWrite)
+            {
+                checkWriteList.Add(sock.Socket);
+            }
+        }
+
+        if (checkError != null)
+        {
+            checkErrorList = [];
+            foreach (ISocket sock in checkError)
+            {
+                checkErrorList.Add(sock.Socket);
+            }
+        }
+
+        Socket.Select(checkReadList, checkWriteList, checkErrorList, microSeconds);
     }
 
     /// <inheritdoc/>
@@ -948,9 +1010,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool SendAsync(SocketAsyncEventArgs e)
+    public bool SendAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.SendAsync(e);
+        return Socket.SendAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -984,9 +1046,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool SendPacketsAsync(SocketAsyncEventArgs e)
+    public bool SendPacketsAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.SendPacketsAsync(e);
+        return Socket.SendPacketsAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -1026,9 +1088,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool SendToAsync(SocketAsyncEventArgs e)
+    public bool SendToAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.SendToAsync(e);
+        return Socket.SendToAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>

@@ -1,4 +1,5 @@
-﻿using System.Diagnostics.Metrics;
+﻿using MockableSocket.Sockets;
+using System.Diagnostics.Metrics;
 using System.Net;
 using System.Net.Sockets;
 using static System.Runtime.InteropServices.JavaScript.JSType;
@@ -165,9 +166,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Begins an asynchronous operation to accept an incoming connection attempt.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>True if the I/O operation is pending, false if the I/O operation completed synchronously.</returns>
-    public bool AcceptAsync(SocketAsyncEventArgs e);
+    public bool AcceptAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Accepts an incoming connection.
@@ -517,9 +518,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Begins an asynchronous request for a connection to a remote host.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>True if the I/O operation is pending, false if it completed successfully.</returns>
-    public bool ConnectAsync(SocketAsyncEventArgs e);
+    public bool ConnectAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Establishes a connection to a remote host.
@@ -537,9 +538,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Begins an asynchronous request to disconnect from a remote endpoint.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>True if the I/O operation is pending, false if it completed successfully.</returns>
-    public bool DisconnectAsync(SocketAsyncEventArgs e);
+    public bool DisconnectAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Disconnects a connected socket from the remote host.
@@ -843,9 +844,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Begins an asynchronous request to receive data from a connected Socket object.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>true if the I/O operation is pending, false if it completed synchronously.</returns>
-    public bool ReceiveAsync(SocketAsyncEventArgs e);
+    public bool ReceiveAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Receives data from a connected socket.
@@ -947,9 +948,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Begins to asynchronously receive data from a specified network device.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>true if the I/O operation is pending, false if it completed synchronously.</returns>
-    public bool ReceiveFromAsync(SocketAsyncEventArgs e);
+    public bool ReceiveFromAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Receives data and returns the <see cref="EndPoint"/> of the sending host.
@@ -1022,9 +1023,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Begins to asynchronously receive the specified number of bytes of data into the specified location in the data buffer, using the specified <see cref="SocketFlags"/>, and stores the <see cref="EndPoint"/> and packet information.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>true if the I/O operation is pending. The Completed event on the e parameter will be raised upon completion of the operation. false if the I/O operation completed synchronously.</returns>
-    public bool ReceiveMessageFromAsync(SocketAsyncEventArgs e);
+    public bool ReceiveMessageFromAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Receives data and returns additional information about the sender of the message.
@@ -1205,9 +1206,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Sends data asynchronously to a connected <see cref="ISocket"/> object.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>true if the I/O operation is pending. The Completed event on the e parameter will be raised upon completion of the operation.false if the I/O operation completed synchronously. In this case, The Completed event on the e parameter will not be raised and the e object passed as a parameter may be examined immediately after the method call returns to retrieve the result of the operation.</returns>
-    public bool SendAsync(SocketAsyncEventArgs e);
+    public bool SendAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Sends the file 'fileName' to a connected <see cref="ISocket"/> object with the <see cref="UseDefaultWorkerThread"/> transmit flag.
@@ -1255,9 +1256,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Sends a collection of files or in memory data buffers asynchronously to a connected <see cref="ISocket"/> object.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>true if the I/O operation is pending. The Completed event on the e parameter will be raised upon completion of the operation.false if the I/O operation completed synchronously.In this case, The Completed event on the e parameter will not be raised and the e object passed as a parameter may be examined immediately after the method call returns to retrieve the result of the operation.</returns>
-    public bool SendPacketsAsync(SocketAsyncEventArgs e);
+    public bool SendPacketsAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Sends the specified number of bytes of data to the specified <see cref="EndPoint"/>, starting at the specified location in the buffer, and using the specified <see cref="SocketFlags"/>.
@@ -1317,9 +1318,9 @@ public interface ISocket : IDisposable
     /// <summary>
     /// Sends data asynchronously to a specific remote host.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object to use for this asynchronous socket operation.</param>
     /// <returns>true if the I/O operation is pending. The Completed event on the e parameter will be raised upon completion of the operation. false if the I/O operation completed synchronously. In this case, The Completed event on the e parameter will not be raised and the e object passed as a parameter may be examined immediately after the method call returns to retrieve the result of the operation.</returns>
-    public bool SendToAsync(SocketAsyncEventArgs e);
+    public bool SendToAsync(SocketWAsyncEventArgs e);
 
     /// <summary>
     /// Sends data to the specified remote host.
