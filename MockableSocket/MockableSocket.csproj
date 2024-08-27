@@ -9,7 +9,7 @@
     <Title>MockableSocket</Title>
     <Version>1.0.0</Version>
     <Authors>Philipp Siewert</Authors>
-    <Description>A library providing mockable classes for tcp communication.</Description>
+    <Description>A library providing mockable sockets for C#.</Description>
     <Copyright>Philipp Siewert</Copyright>
     <PackageReadmeFile>README.md</PackageReadmeFile>
     <RepositoryType>git</RepositoryType>
