@@ -30,8 +30,8 @@ jobs:
 
     # Create the NuGet package in the folder from the environment variable NuGetDirectory
     
-    - run: dotnet build MockableTcp/MockableTcp.csproj --configuration Release
-    - run: dotnet pack MockableTcp/MockableTcp.csproj --configuration Release --output ${{ env.NuGetDirectory }}
+    - run: dotnet build MockableSocket/MockableSocket.csproj --configuration Release
+    - run: dotnet pack MockableSocket/MockableSocket.csproj --configuration Release --output ${{ env.NuGetDirectory }}
 
     # Publish the NuGet package as an artifact, so they can be used in the following jobs
     - uses: actions/upload-artifact@v4
