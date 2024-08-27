@@ -1,7 +1,7 @@
-﻿using MockableTcp.Interfaces.Sockets;
+﻿using MockableSocket.Interfaces.Sockets;
 using System.Net.Sockets;
 
-namespace MockableTcp.Sockets;
+namespace MockableSocket.Sockets;
 
 /// <summary>
 /// Implements ISocketFactory.

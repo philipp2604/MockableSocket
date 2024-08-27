@@ -6,7 +6,7 @@
     <Nullable>enable</Nullable>
     <GeneratePackageOnBuild>True</GeneratePackageOnBuild>
     <PackageId>philipp2604.$(AssemblyName)</PackageId>
-    <Title>MockableTcp</Title>
+    <Title>MockableSocket</Title>
     <Version>1.0.1</Version>
     <Authors>Philipp Siewert</Authors>
     <Description>A library providing mockable classes for tcp communication.</Description>
@@ -16,8 +16,8 @@
     <PackageTags>tcp; mock; mockable; network; tcpclient</PackageTags>
     <PackageLicenseExpression>MIT</PackageLicenseExpression>
     <PackageRequireLicenseAcceptance>True</PackageRequireLicenseAcceptance>
-    <PackageProjectUrl>https://github.com/philipp2604/MockableTcp</PackageProjectUrl>
-    <RepositoryUrl>https://github.com/philipp2604/MockableTcp</RepositoryUrl>
+    <PackageProjectUrl>https://github.com/philipp2604/MockableSocket</PackageProjectUrl>
+    <RepositoryUrl>https://github.com/philipp2604/MockableSocket</RepositoryUrl>
   </PropertyGroup>
 
   <ItemGroup>

@@ -1,11 +1,11 @@
-﻿using MockableTcp.Interfaces.Sockets;
+﻿using MockableSocket.Interfaces.Sockets;
 using System;
 using System.Collections;
 using System.Drawing;
 using System.Net;
 using System.Net.Sockets;
 
-namespace MockableTcp.Sockets;
+namespace MockableSocket.Sockets;
 
 #pragma warning disable RCS1047 // Non-asynchronous method name should not end with 'Async'
 

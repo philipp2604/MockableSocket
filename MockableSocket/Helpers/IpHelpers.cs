@@ -1,7 +1,7 @@
 ﻿using System.Net;
 using System.Text.RegularExpressions;
 
-namespace MockableTcp;
+namespace MockableSocket;
 
 /// <summary>
 /// Helpers around ip addresses.

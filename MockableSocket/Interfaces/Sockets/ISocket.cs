@@ -3,7 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 using static System.Runtime.InteropServices.JavaScript.JSType;
 
-namespace MockableTcp.Interfaces.Sockets;
+namespace MockableSocket.Interfaces.Sockets;
 
 #pragma warning disable RCS1047 // Non-asynchronous method name should not end with 'Async'
 public interface ISocket : IDisposable

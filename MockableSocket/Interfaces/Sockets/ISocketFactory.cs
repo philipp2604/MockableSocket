@@ -1,6 +1,6 @@
 ﻿using System.Net.Sockets;
 
-namespace MockableTcp.Interfaces.Sockets;
+namespace MockableSocket.Interfaces.Sockets;
 
 public interface ISocketFactory
 {
