@@ -165,9 +165,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool AcceptAsync(SocketAsyncEventArgs e)
+    public bool AcceptAsync(SocketWAsyncEventArgs e)
     {
-        throw new NotImplementedException();
+        return Socket.AcceptAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -317,10 +317,10 @@ public class SocketW : ISocket
     /// <summary>
     /// Cancels an asynchronous request for a remote host connection.
     /// </summary>
-    /// <param name="e">The <see cref="SocketAsyncEventArgs"/> object used to request the connection to the remote host by calling one of the <see cref="ConnectAsync(SocketType, ProtocolType, SocketAsyncEventArgs)"/> methods.</param>
-    public static void CancelConnectAsync(SocketAsyncEventArgs e)
+    /// <param name="e">The <see cref="SocketWAsyncEventArgs"/> object used to request the connection to the remote host by calling one of the <see cref="ConnectAsync(SocketType, ProtocolType, SocketWAsyncEventArgs)"/> methods.</param>
+    public static void CancelConnectAsync(SocketWAsyncEventArgs e)
     {
-        Socket.CancelConnectAsync(e);
+        Socket.CancelConnectAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -402,9 +402,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool ConnectAsync(SocketAsyncEventArgs e)
+    public bool ConnectAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.ConnectAsync(e);
+        return Socket.ConnectAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -420,9 +420,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool DisconnectAsync(SocketAsyncEventArgs e)
+    public bool DisconnectAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.DisconnectAsync(e);
+        return Socket.DisconnectAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -672,9 +672,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool ReceiveAsync(SocketAsyncEventArgs e)
+    public bool ReceiveAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.ReceiveAsync(e);
+        return Socket.ReceiveAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -744,9 +744,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool ReceiveFromAsync(SocketAsyncEventArgs e)
+    public bool ReceiveFromAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.ReceiveFromAsync(e);
+        return Socket.ReceiveFromAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -792,9 +792,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool ReceiveMessageFromAsync(SocketAsyncEventArgs e)
+    public bool ReceiveMessageFromAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.ReceiveMessageFromAsync(e);
+        return Socket.ReceiveMessageFromAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -948,9 +948,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool SendAsync(SocketAsyncEventArgs e)
+    public bool SendAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.SendAsync(e);
+        return Socket.SendAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -984,9 +984,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool SendPacketsAsync(SocketAsyncEventArgs e)
+    public bool SendPacketsAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.SendPacketsAsync(e);
+        return Socket.SendPacketsAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
@@ -1026,9 +1026,9 @@ public class SocketW : ISocket
     }
 
     /// <inheritdoc/>
-    public bool SendToAsync(SocketAsyncEventArgs e)
+    public bool SendToAsync(SocketWAsyncEventArgs e)
     {
-        return Socket.SendToAsync(e);
+        return Socket.SendToAsync(e.EventArgs);
     }
 
     /// <inheritdoc/>
