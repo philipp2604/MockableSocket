@@ -263,49 +263,49 @@ public class SocketW : ISocket
     /// <inheritdoc/>
     public IAsyncResult BeginReceiveMessageFrom(byte[] buffer, int offset, int size, SocketFlags socketFlags, ref EndPoint remoteEP, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginReceiveMessageFrom(buffer, offset, size, socketFlags, ref remoteEP, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSend(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSend(buffers, socketFlags, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult? BeginSend(IList<ArraySegment<byte>> buffers, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSend(buffers, socketFlags, out errorCode, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSend(buffer, offset, size, socketFlags, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult? BeginSend(byte[] buffer, int offset, int size, SocketFlags socketFlags, out SocketError errorCode, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSend(buffer, offset, size, socketFlags, out errorCode, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSendFile(string? fileName, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSendFile(fileName, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSendFile(string? fileName, byte[]? preBuffer, byte[]? postBuffer, TransmitFileOptions flags, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSendFile(fileName, preBuffer, postBuffer, flags, callback, state);
     }
 
     /// <inheritdoc/>
     public IAsyncResult BeginSendTo(byte[] buffer, int offset, int size, SocketFlags socketFlags, EndPoint remoteEP, AsyncCallback? callback, object? state)
     {
-        throw new NotImplementedException();
+        return Socket.BeginSendTo(buffer, offset, size, socketFlags, remoteEP, callback, state);
     }
 
     /// <inheritdoc/>
@@ -458,19 +458,19 @@ public class SocketW : ISocket
     /// <inheritdoc/>
     public ISocket EndAccept(IAsyncResult asyncResult)
     {
-        throw new NotImplementedException();
+        return new SocketW(Socket.EndAccept(asyncResult));
     }
 
     /// <inheritdoc/>
     public ISocket EndAccept(out byte[] buffer, IAsyncResult asyncResult)
     {
-        throw new NotImplementedException();
+        return new SocketW(Socket.EndAccept(out buffer, asyncResult));
     }
 
     /// <inheritdoc/>
     public ISocket EndAccept(out byte[] buffer, out int bytesTransferred, IAsyncResult asyncResult)
     {
-        throw new NotImplementedException();
+        return new SocketW(Socket.EndAccept(out buffer, out bytesTransferred, asyncResult));
     }
 
     /// <inheritdoc/>
