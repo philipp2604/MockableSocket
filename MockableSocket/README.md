@@ -20,5 +20,8 @@ You can acquire this library either directly via the NuGet package manager or by
 ## Ideas / TODO
 * Wrappers, like TcpClient... ?
 
+## Credit
+This library is using a lot of code from Microsoft's `System.Net.Sockets` namespace, it's sole purpose is to enable easier mocking.
+
 ## License
 This library is [MIT licensed](https://github.com/philipp2604/MockableSocket/blob/master/LICENSE.txt).
