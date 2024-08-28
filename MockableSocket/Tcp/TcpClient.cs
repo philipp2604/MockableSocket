@@ -1,5 +1,7 @@
-﻿using MockableSocket.Interfaces.Sockets;
+﻿using MockableSocket.Interfaces.NetworkStream;
+using MockableSocket.Interfaces.Sockets;
 using MockableSocket.Interfaces.Tcp;
+using MockableSocket.NetworkStream;
 using MockableSocket.Sockets;
 using System.Net;
 using System.Net.Sockets;
@@ -12,7 +14,7 @@ namespace MockableSocket.Tcp;
 public class TcpClient : ITcpClient
 {
     private bool _disposed;
-    private NetworkStream? _stream;
+    private INetworkStream? _stream;
 
     /// <summary>
     /// Creates a new instance of <see cref="TcpClient"/>.
@@ -252,9 +254,9 @@ public class TcpClient : ITcpClient
     }
 
     /// <inheritdoc/>
-    public NetworkStream GetStream()
+    public INetworkStream GetStream()
     {
-        return !Connected ? throw new InvalidOperationException() : (_stream ??= new NetworkStream(Client.Socket, true));
+        return !Connected ? throw new InvalidOperationException() : (_stream ??= new NetworkStreamW(Client, true));
     }
 
     private async ValueTask CompleteConnectAsync(ValueTask task)

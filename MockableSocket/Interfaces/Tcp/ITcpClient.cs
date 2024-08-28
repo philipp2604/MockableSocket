@@ -7,6 +7,7 @@ using System.Net.Sockets;
 using System.Net;
 using System.Text;
 using System.Threading.Tasks;
+using MockableSocket.Interfaces.NetworkStream;
 
 namespace MockableSocket.Interfaces.Tcp;
 
@@ -191,5 +192,5 @@ public interface ITcpClient : IDisposable
     /// Returns the <see cref="NetworkStream"/> used to send and receive data.
     /// </summary>
     /// <returns>The underlying <see cref="NetworkStream"/>.</returns>
-    public NetworkStream GetStream();
+    public INetworkStream GetStream();
 }
