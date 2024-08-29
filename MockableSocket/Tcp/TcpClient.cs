@@ -224,7 +224,7 @@ public class TcpClient : ITcpClient
         {
             if (disposing)
             {
-                if(_stream != null)
+                if (_stream != null)
                 {
                     _stream.Dispose();
                 }

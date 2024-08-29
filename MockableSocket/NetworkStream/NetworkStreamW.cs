@@ -1,11 +1,5 @@
 ﻿using MockableSocket.Interfaces.NetworkStream;
 using MockableSocket.Interfaces.Sockets;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Net.Sockets;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MockableSocket.NetworkStream;
 
@@ -30,7 +24,7 @@ public class NetworkStreamW : Stream, INetworkStream
     /// </summary>
     /// <param name="socket">The <see cref="ISocket"/> that the <see cref="NetworkStreamW"/> will use to send and receive data.</param>
     /// <param name="ownsSocket">Set to true to indicate that the <see cref="NetworkStreamW"/> will take ownership of the <see cref="ISocket"/>; otherwise, false.</param>
-    public NetworkStreamW(ISocket socket, bool ownsSocket) : this (socket, FileAccess.ReadWrite, ownsSocket)
+    public NetworkStreamW(ISocket socket, bool ownsSocket) : this(socket, FileAccess.ReadWrite, ownsSocket)
     {
     }
 
@@ -39,7 +33,7 @@ public class NetworkStreamW : Stream, INetworkStream
     /// </summary>
     /// <param name="socket">The <see cref="ISocket"/> that the <see cref="NetworkStreamW"/> will use to send and receive data.</param>
     /// <param name="access">A bitwise combination of the <see cref="FileAccess"/> values that specify the type of access given to the <see cref="NetworkStreamW"/> over the provided <see cref="ISocket"/>.</param>
-    public NetworkStreamW(ISocket socket, FileAccess access) : this (socket, access, false)
+    public NetworkStreamW(ISocket socket, FileAccess access) : this(socket, access, false)
     {
     }
 
@@ -175,7 +169,7 @@ public class NetworkStreamW : Stream, INetworkStream
         GC.SuppressFinalize(this);
     }
 
-    public new virtual ValueTask DisposeAsync()
+    public virtual new ValueTask DisposeAsync()
     {
         return NetworkStream.DisposeAsync();
     }
@@ -322,7 +316,7 @@ public class NetworkStreamW : Stream, INetworkStream
     /// <returns>A task that represents the asynchronous write operation.</returns>
     public override Task WriteAsync(byte[] buffer, int offset, int count, CancellationToken cancellationToken)
     {
-        return NetworkStream.WriteAsync(buffer, offset,count, cancellationToken);
+        return NetworkStream.WriteAsync(buffer, offset, count, cancellationToken);
     }
 
     /// <summary>
