@@ -3,6 +3,7 @@ using System.Net;
 using System.Net.Sockets;
 
 namespace MockableSocket.Interfaces.Sockets;
+
 public interface ISocketAsyncEventArgs : IDisposable
 {
     /// <summary>
