@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Moq;
 using MockableSocket.Tcp;
+using MockableSocket.Interfaces.Tcp;
 
 namespace MockableSocket.Test.Tcp;
 public class TcpClientTests
@@ -76,8 +77,8 @@ public class TcpClientTests
     {
         //Arrange
         var ipAddress = IPAddress.Loopback;
-        var port = 1234;
-        var callback = new AsyncCallback(async x => await Task.CompletedTask);
+        const int port = 1234;
+        var callback = new AsyncCallback(async _ => await Task.CompletedTask);
         object? obj = null;
 
         var called = false;
@@ -98,9 +99,9 @@ public class TcpClientTests
     public void BeginConnect_AddressesPortCallbackState_Successful()
     {
         //Arrange
-        IPAddress[] ipAddresses = { IPAddress.Loopback, IPAddress.IPv6Any };
-        var port = 1234;
-        var callback = new AsyncCallback(async x => await Task.CompletedTask);
+        IPAddress[] ipAddresses = [IPAddress.Loopback, IPAddress.IPv6Any];
+        const int port = 1234;
+        var callback = new AsyncCallback(async _ => await Task.CompletedTask);
         object? obj = null;
 
         var called = false;
@@ -121,9 +122,9 @@ public class TcpClientTests
     public void BeginConnect_HostPortCallbackState_Successful()
     {
         //Arrange
-        var host = "localhost";
-        var port = 1234;
-        var callback = new AsyncCallback(async x => await Task.CompletedTask);
+        const string host = "localhost";
+        const int port = 1234;
+        var callback = new AsyncCallback(async _ => await Task.CompletedTask);
         object? obj = null;
 
         var called = false;
@@ -144,8 +145,8 @@ public class TcpClientTests
     public void Close_Successful()
     {
         //Arrange
-        var host = "localhost";
-        var port = 1234;
+        const string host = "localhost";
+        const int port = 1234;
 
         var called = false;
 
@@ -189,7 +190,7 @@ public class TcpClientTests
     {
         //Arrange
         var ipAddress = IPAddress.Loopback;
-        var port = 1234;
+        const int port = 1234;
 
         var called = false;
 
@@ -210,8 +211,8 @@ public class TcpClientTests
     public void Connect_AddressesPort_Successful()
     {
         //Arrange
-        IPAddress[] ipAddresses = { IPAddress.Loopback, IPAddress.IPv6Any };
-        var port = 1234;
+        IPAddress[] ipAddresses = [IPAddress.Loopback, IPAddress.IPv6Any];
+        const int port = 1234;
 
         var called = false;
 
@@ -232,8 +233,8 @@ public class TcpClientTests
     public void Connect_HostPort_Successful()
     {
         //Arrange
-        var host = "localhost";
-        var port = 1234;
+        const string host = "localhost";
+        const int port = 1234;
 
         var called = false;
 
@@ -254,8 +255,8 @@ public class TcpClientTests
     public async Task ConnectAsync_HostPortCancellationToken_Successful()
     {
         //Arrange
-        var host = "localhost";
-        var port = 1234;
+        const string host = "localhost";
+        const int port = 1234;
         var ct = new CancellationToken();
 
         var called = false;
@@ -277,8 +278,8 @@ public class TcpClientTests
     public async Task ConnectAsync_AddressesPortCancellationToken_Successful()
     {
         //Arrange
-        IPAddress[] ipAddresses = { IPAddress.Loopback, IPAddress.IPv6Any };
-        var port = 1234;
+        IPAddress[] ipAddresses = [IPAddress.Loopback, IPAddress.IPv6Any];
+        const int port = 1234;
         var ct = new CancellationToken();
 
         var called = false;
@@ -301,7 +302,7 @@ public class TcpClientTests
     {
         //Arrange
         var ipAddress = IPAddress.Loopback;
-        var port = 1234;
+        const int port = 1234;
         var ct = new CancellationToken();
 
         var called = false;
@@ -323,8 +324,8 @@ public class TcpClientTests
     public async Task ConnectAsync_HostPort_Successful()
     {
         //Arrange
-        var host = "localhost";
-        var port = 1234;
+        const string host = "localhost";
+        const int port = 1234;
 
         var called = false;
 
@@ -367,8 +368,8 @@ public class TcpClientTests
     public async Task ConnectAsync_AddressesPort_Successful()
     {
         //Arrange
-        IPAddress[] ipAddresses = { IPAddress.Loopback, IPAddress.IPv6Any };
-        var port = 1234;
+        IPAddress[] ipAddresses = [IPAddress.Loopback, IPAddress.IPv6Any];
+        const int port = 1234;
 
         var called = false;
 
@@ -390,7 +391,7 @@ public class TcpClientTests
     {
         //Arrange
         var ipAddress = IPAddress.Loopback;
-        var port = 1234;
+        const int port = 1234;
 
         var called = false;
 
@@ -412,7 +413,6 @@ public class TcpClientTests
     {
         //Arrange
         var result = new Mock<IAsyncResult>();
-        object? obj = null;
 
         var called = false;
 
@@ -429,11 +429,23 @@ public class TcpClientTests
         Assert.True(client.Active);
     }
 
-    //Needs custom NetworkStream
     /*
     [Fact]
     public void GetStream_Successful()
     {
+        //Arrange
+        var socket = new Mock<ISocket>();
+        socket.Setup(x => x.Blocking).Returns(true);
+        socket.Setup(x => x.Connected).Returns(true);
+        socket.Setup(x => x.SocketType).Returns(System.Net.Sockets.SocketType.Stream);
+
+        var client = new TcpClient(socket.Object);
+
+        //Act
+        var stream = client.GetStream();
+
+        //Assert
+        Assert.NotNull(stream);
     }
     */
 }
