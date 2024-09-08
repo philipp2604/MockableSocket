@@ -1420,6 +1420,9 @@ public interface ISocket : IDisposable
     /// </summary>
     /// <param name="how">One of the <see cref="SocketShutdown"/> values that specifies the operation that will no longer be allowed.</param>
     public void Shutdown(SocketShutdown how);
+
+    internal const int DefaultCloseTimeout = -1;
+    internal void InternalShutdown(SocketShutdown how);
 }
 
 #pragma warning restore RCS1047 // Non-asynchronous method name should not end with 'Async'

@@ -1166,6 +1166,20 @@ public class SocketW : ISocket
         Socket.Shutdown(how);
     }
 
+    internal void InternalShutdown(SocketShutdown how)
+    {
+        if (_disposed || Socket.Handle.IsInvalid)
+        {
+            return;
+        }
+
+        try
+        {
+            SocketPal.Shutdown(_handle, _isConnected, _isDisconnected, how);
+        }
+        catch (ObjectDisposedException) { }
+    }
+
     ~SocketW()
     {
         Dispose(false);
